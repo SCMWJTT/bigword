@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b3038">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<title>Bigword</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;align-items:center;overflow:hidden;user-select:none;-webkit-user-select:none}
+.th-slate{--bg:#2b3038;--pn:#3a414c;--tx:#e8ebf0;--ac:#f5b942}
+.th-midnight{--bg:#0e1424;--pn:#1c2742;--tx:#e3e8f5;--ac:#6ea8ff}
+.th-forest{--bg:#16261c;--pn:#24402e;--tx:#e4f0e6;--ac:#c9e265}
+.th-berry{--bg:#2a1626;--pn:#46233f;--tx:#f5e6f1;--ac:#ff8fc1}
+.th-light{--bg:#eceff3;--pn:#ffffff;--tx:#222831;--ac:#d9480f}
+.ts-classic{--tb:#f3e3b8;--tc:#3a2a10;--tr:#b79a5a;--rad:4px}
+.ts-wood{--tb:linear-gradient(135deg,#dba96b,#b97d3f);--tc:#2b1a08;--tr:#8a5a28;--rad:4px}
+.ts-white{--tb:#ffffff;--tc:#222;--tr:#b8b8b8;--rad:4px}
+.ts-dark{--tb:#2d3340;--tc:#f2f2f2;--tr:#0e1116;--rad:4px}
+.ts-clean{--tb:#f7f7f9;--tc:#333;--tr:#d0d0d6;--rad:9px}
+#top{width:100%;max-width:520px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:15px}
+#top b{font-size:17px}
+#vp{width:min(100vw,58dvh);aspect-ratio:1;overflow:hidden;position:relative;touch-action:none;background:#222}
+#board{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;will-change:transform;--ts:35px}
+#board.anim{transition:transform .22s ease}
+.cell{width:40px;height:40px;border:1px solid rgba(0,0,0,.18);background:#fff0cc;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+.tw{background:#c00000}.dw{background:#ff6699}.st{background:#ff6699;font-size:22px}.tl{background:#0033cc}.dl{background:#5b9bd5}
+.tile{width:var(--ts);height:var(--ts);font-size:calc(var(--ts)*.58);position:relative;display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:var(--rad);background:var(--tb);color:var(--tc);border:1px solid var(--tr);box-shadow:0 1px 2px rgba(0,0,0,.4);touch-action:none}
+.tile i{position:absolute;right:9%;bottom:3%;font-style:normal;font-size:.42em;font-weight:600}
+.tile.blank{color:#b03a2e}
+.cell .tile{outline:2px solid #ffd54a;font-size:20px}
+#status{min-height:40px;width:100%;max-width:520px;padding:7px 12px;font-size:14px;text-align:center;line-height:1.3}
+#rack{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px 8px;width:100%;max-width:520px;touch-action:none}
+.slot{width:var(--ts);height:var(--ts);border-radius:4px;background:rgba(128,128,128,.18)}
+.slot .tile{transition:transform .1s}
+.slot .tile.sel{transform:translateY(-7px);outline:2px solid var(--ac)}
+.slot .tile.lifted{opacity:.3}
+#btns{display:flex;gap:8px;padding:6px 8px}
+button{background:var(--pn);color:var(--tx);border:1px solid rgba(128,128,128,.35);padding:12px 16px;border-radius:8px;font-size:15px;font-family:inherit}
+button:active{filter:brightness(1.25)}
+.ghost{position:fixed;pointer-events:none;z-index:20;opacity:.92;transform:translate(-50%,-50%)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:10}
+.ov.on{display:flex}
+.box{background:var(--pn);color:var(--tx);padding:16px;border-radius:12px;width:min(92vw,360px);display:flex;flex-direction:column;gap:12px}
+.box label{display:flex;flex-direction:column;gap:4px;font-size:14px}
+.box select,.box input{font-size:16px;padding:6px;font-family:inherit}
+#letters{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+#letters button{padding:10px 0}
+</style>
+</head>
+<body class="th-slate ts-classic">
+<div id="top"><b id="title">Bigword</b><span>You 0 &nbsp; Computer 0</span><span id="bag"></span></div>
+<div id="vp"><div id="board"></div></div>
+<div id="status"></div>
+<div id="rack"></div>
+<div id="btns">
+  <button id="bShuffle">Shuffle</button>
+  <button id="bRecall">Recall</button>
+  <button id="bFit">Fit board</button>
+  <button id="bSet">Settings</button>
+</div>
+
+<div class="ov" id="pick"><div class="box">
+  <div>Blank tile: choose a letter</div>
+  <div id="letters"></div>
+  <button id="pickCancel">Cancel</button>
+</div></div>
+
+<div class="ov" id="set"><div class="box">
+  <label>Tile size (10 = standard)<input type="range" id="sSize" min="6" max="16" step="1"></label>
+  <label>Theme<select id="sTheme">
+    <option value="slate">Slate</option><option value="midnight">Midnight</option>
+    <option value="forest">Forest</option><option value="berry">Berry</option><option value="light">Light</option>
+  </select></label>
+  <label>Tile style<select id="sTiles">
+    <option value="classic">Classic ivory</option><option value="wood">Wood</option>
+    <option value="white">White</option><option value="dark">Dark</option><option value="clean">Clean</option>
+  </select></label>
+  <button id="sNew">New game</button>
+  <button id="sClose">Close</button>
+</div></div>
+
+<script src="config.js"></script>
+<script>
+const C = window.CONFIG, N = C.board.length, CELL = 40, BS = N * CELL;
+const $ = id => document.getElementById(id);
+const vp = $('vp'), board = $('board');
+let S = { theme: 'slate', tiles: 'classic', size: 10 };
+let G = null;              // { bag:[chars], rack:[tile|null], placed:[{r,c,t,slot}] }
+let selected = -1;
+let view = { s: 1, x: 0, y: 0 }, fit = 1;
+const cells = [];
+
+document.title = C.name; $('title').textContent = C.name;
+
+function status(m) { $('status').textContent = m; }
+function save() { try { localStorage.setItem('bigword', JSON.stringify({ S, G })); } catch (e) {} }
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem('bigword'));
+    if (d) { Object.assign(S, d.S); if (d.G && d.G.rack && d.G.rack.length === C.rackSize) G = d.G; }
+  } catch (e) {}
+}
+function newGame() {
+  const bag = [];
+  for (const ch in C.bag) for (let i = 0; i < C.bag[ch]; i++) bag.push(ch);
+  for (let i = bag.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [bag[i], bag[j]] = [bag[j], bag[i]]; }
+  G = { bag, rack: [], placed: [] };
+  for (let i = 0; i < C.rackSize; i++) G.rack.push({ ch: G.bag.pop() });
+  selected = -1;
+}
+
+// ---------- board ----------
+const CLS = { T: 'tw', D: 'dw', t: 'tl', d: 'dl', '*': 'st', '.': '' };
+const LBL = { T: 'TW', D: 'DW', t: 'TL', d: 'DL', '*': '\u2605', '.': '' };
+function buildBoard() {
+  board.style.width = board.style.height = BS + 'px';
+  board.style.gridTemplateColumns = 'repeat(' + N + ',' + CELL + 'px)';
+  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+    const k = C.board[r][c], d = document.createElement('div');
+    d.className = 'cell ' + CLS[k]; d.textContent = LBL[k];
+    board.appendChild(d); cells.push(d);
+  }
+}
+function boardSummary() {
+  const n = { T: 0, D: 0, t: 0, d: 0 };
+  C.board.forEach(row => { for (const k of row) { if (k === '*') n.D++; else if (n[k] !== undefined) n[k]++; } });
+  let tiles = 0; for (const k in C.bag) tiles += C.bag[k];
+  return N + ' x ' + N + ' board: ' + n.T + ' TW, ' + n.D + ' DW, ' + n.t + ' TL, ' + n.d + ' DL. Bag has ' + tiles + ' tiles.';
+}
+
+// ---------- tiles and rack ----------
+function tileEl(t) {
+  const e = document.createElement('div');
+  const blank = t.ch === '?';
+  e.className = 'tile' + (blank ? ' blank' : '');
+  e.innerHTML = (blank ? (t.as || '') : t.ch) + (blank ? '' : '<i>' + C.values[t.ch] + '</i>');
+  return e;
+}
+function sizes() {
+  const base = Math.min(52, (Math.min(innerWidth, 520) - 16) / C.rackSize - 4);
+  $('rack').style.setProperty('--ts', (base * S.size / 10) + 'px');
+}
+function render() {
+  cells.forEach(d => { const t = d.querySelector('.tile'); if (t) t.remove(); });
+  G.placed.forEach(p => cells[p.r * N + p.c].appendChild(tileEl(p.t)));
+  const rack = $('rack'); rack.innerHTML = '';
+  G.rack.forEach((t, i) => {
+    const s = document.createElement('div'); s.className = 'slot'; s.dataset.i = i;
+    if (t) { const e = tileEl(t); if (i === selected) e.classList.add('sel'); s.appendChild(e); }
+    rack.appendChild(s);
+  });
+  $('bag').textContent = 'Bag ' + G.bag.length;
+}
+function letterOf(t) { return t.ch === '?' ? (t.as || 'blank') : t.ch; }
+
+function place(slot, r, c) {
+  const t = G.rack[slot]; if (!t) return;
+  if (G.placed.some(p => p.r === r && p.c === c)) { status('That square is taken.'); return; }
+  if (t.ch === '?') { pending = { slot, r, c }; $('pick').classList.add('on'); return; }
+  doPlace(slot, r, c);
+}
+function doPlace(slot, r, c, as) {
+  const t = G.rack[slot]; if (as) t.as = as;
+  G.placed.push({ r, c, t, slot }); G.rack[slot] = null; selected = -1;
+  if (view.s < fit * 1.3) zoomTo(r, c, 1.1);
+  render(); save();
+  status('Placed ' + letterOf(t) + ' at row ' + (r + 1) + ', column ' + (c + 1) + '. ' + G.placed.length + ' on the board this turn.');
+}
+function backToRack(p) {
+  if (p.t.ch === '?') delete p.t.as;
+  let i = G.rack[p.slot] === null ? p.slot : G.rack.indexOf(null);
+  G.rack[i] = p.t;
+}
+function recallOne(pi) {
+  const p = G.placed.splice(pi, 1)[0]; backToRack(p);
+  render(); save(); status('Returned ' + (p.t.ch === '?' ? 'blank' : p.t.ch) + ' to the rack.');
+}
+function recallAll() {
+  const n = G.placed.length;
+  G.placed.splice(0).forEach(backToRack);
+  selected = -1; render(); save(); status(n + (n === 1 ? ' tile' : ' tiles') + ' returned to the rack.');
+}
+function shuffle() {
+  const ts = G.rack.filter(Boolean);
+  for (let i = ts.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [ts[i], ts[j]] = [ts[j], ts[i]]; }
+  while (ts.length < C.rackSize) ts.push(null);
+  G.rack = ts; selected = -1; render(); save(); status('Rack shuffled.');
+}
+
+// blank letter picker
+let pending = null;
+for (const ch of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+  const b = document.createElement('button'); b.textContent = ch;
+  b.onclick = () => { $('pick').classList.remove('on'); const p = pending; pending = null; if (p) doPlace(p.slot, p.r, p.c, ch); };
+  $('letters').appendChild(b);
+}
+$('pickCancel').onclick = () => { pending = null; $('pick').classList.remove('on'); };
+
+// ---------- zoom and pan ----------
+function apply() {
+  const sz = vp.clientWidth, bs = BS * view.s;
+  view.x = bs <= sz ? (sz - bs) / 2 : Math.min(0, Math.max(sz - bs, view.x));
+  view.y = bs <= sz ? (sz - bs) / 2 : Math.min(0, Math.max(sz - bs, view.y));
+  board.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')';
+}
+function animate() { board.classList.add('anim'); setTimeout(() => board.classList.remove('anim'), 260); }
+function zoomAt(px, py, k, dx, dy) {
+  const ns = Math.min(2.5, Math.max(fit, view.s * k)); k = ns / view.s;
+  view.x = px - (px - view.x) * k + (dx || 0); view.y = py - (py - view.y) * k + (dy || 0); view.s = ns; apply();
+}
+function zoomTo(r, c, s) {
+  animate(); const sz = vp.clientWidth; view.s = s;
+  view.x = sz / 2 - (c + .5) * CELL * s; view.y = sz / 2 - (r + .5) * CELL * s; apply();
+}
+function zoomFit() { animate(); view.s = fit; apply(); }
+function cellAt(x, y) {
+  const r = vp.getBoundingClientRect();
+  if (x < r.left || x > r.right || y < r.top || y > r.bottom) return null;
+  const c = Math.floor((x - r.left - view.x) / view.s / CELL), rr = Math.floor((y - r.top - view.y) / view.s / CELL);
+  return (c < 0 || rr < 0 || c >= N || rr >= N) ? null : { r: rr, c };
+}
+
+const ptrs = new Map(); let gest = null, lastT = 0, lastZ = false;
+vp.addEventListener('pointerdown', e => {
+  vp.setPointerCapture(e.pointerId);
+  ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY });
+  if (ptrs.size === 1) gest = { moved: false }; else gest.moved = true;
+});
+vp.addEventListener('pointermove', e => {
+  const p = ptrs.get(e.pointerId); if (!p) return;
+  if (ptrs.size === 1) {
+    if (!gest.moved && Math.hypot(e.clientX - p.x0, e.clientY - p.y0) > 8) gest.moved = true;
+    const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
+    if (gest.moved) { view.x += dx; view.y += dy; apply(); }
+  } else if (ptrs.size === 2) {
+    const [a, b] = [...ptrs.values()];
+    const oc = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, od = Math.hypot(a.x - b.x, a.y - b.y);
+    p.x = e.clientX; p.y = e.clientY;
+    const nc = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, nd = Math.hypot(a.x - b.x, a.y - b.y);
+    const r = vp.getBoundingClientRect();
+    if (od > 0) zoomAt(oc.x - r.left, oc.y - r.top, nd / od, nc.x - oc.x, nc.y - oc.y);
+  }
+});
+function endPtr(e, cancelled) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId);
+  if (ptrs.size === 0 && gest && !gest.moved && !cancelled) tap(e);
+}
+vp.addEventListener('pointerup', e => endPtr(e, false));
+vp.addEventListener('pointercancel', e => endPtr(e, true));
+vp.addEventListener('wheel', e => {
+  e.preventDefault(); const r = vp.getBoundingClientRect();
+  zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 0.87);
+}, { passive: false });
+
+function tap(e) {
+  const q = cellAt(e.clientX, e.clientY); if (!q) return;
+  const now = Date.now(), dbl = now - lastT < 300 && !lastZ; lastT = now; lastZ = false;
+  const pi = G.placed.findIndex(p => p.r === q.r && p.c === q.c);
+  if (pi >= 0) { recallOne(pi); return; }
+  if (selected >= 0) { place(selected, q.r, q.c); return; }
+  if (view.s < fit * 1.3) { zoomTo(q.r, q.c, 1.1); lastZ = true; status('Zoomed in. Double-tap to zoom out.'); }
+  else if (dbl) { zoomFit(); }
+}
+
+// ---------- dragging from the rack ----------
+let drag = null;
+$('rack').addEventListener('pointerdown', e => {
+  const el = e.target.closest('.tile'); if (!el) return;
+  drag = { i: +el.parentNode.dataset.i, el, x0: e.clientX, y0: e.clientY, moved: false, ghost: null };
+});
+window.addEventListener('pointermove', e => {
+  if (!drag) return;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) {
+    drag.moved = true;
+    const g = drag.el.cloneNode(true); g.classList.add('ghost'); g.classList.remove('sel');
+    g.style.setProperty('--ts', drag.el.offsetWidth + 'px'); document.body.appendChild(g);
+    drag.ghost = g; drag.el.classList.add('lifted');
+  }
+  if (drag.moved) { drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = (e.clientY - 50) + 'px'; }
+});
+function endDrag(e, cancelled) {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (d.ghost) d.ghost.remove();
+  if (d.moved) {
+    d.el.classList.remove('lifted');
+    if (cancelled) return;
+    const q = cellAt(e.clientX, e.clientY - 50);
+    if (q) place(d.i, q.r, q.c); else status('Drop the tile on a board square.');
+  } else if (!cancelled) {
+    selected = selected === d.i ? -1 : d.i; render();
+    status(selected >= 0 ? 'Tile selected. Tap a square to place it.' : 'Tile deselected.');
+  }
+}
+window.addEventListener('pointerup', e => endDrag(e, false));
+window.addEventListener('pointercancel', e => endDrag(e, true));
+
+// ---------- buttons and settings ----------
+$('bShuffle').onclick = shuffle;
+$('bRecall').onclick = recallAll;
+$('bFit').onclick = zoomFit;
+$('bSet').onclick = () => {
+  $('sSize').value = S.size; $('sTheme').value = S.theme; $('sTiles').value = S.tiles; $('set').classList.add('on');
+};
+$('sClose').onclick = () => $('set').classList.remove('on');
+$('sSize').oninput = e => { S.size = +e.target.value; sizes(); save(); };
+$('sTheme').onchange = e => { S.theme = e.target.value; applySettings(); save(); };
+$('sTiles').onchange = e => { S.tiles = e.target.value; applySettings(); save(); };
+$('sNew').onclick = () => {
+  if (!confirm('Start a new game?')) return;
+  newGame(); render(); save(); $('set').classList.remove('on'); status('New game. ' + boardSummary());
+};
+function applySettings() {
+  document.body.className = 'th-' + S.theme + ' ts-' + S.tiles;
+  const m = document.querySelector('meta[name=theme-color]');
+  m.content = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#2b3038';
+  sizes();
+}
+window.addEventListener('resize', () => {
+  const was = view.s <= fit * 1.01; fit = vp.clientWidth / BS;
+  if (was) view.s = fit; view.s = Math.max(view.s, fit); sizes(); apply();
+});
+
+// ---------- start ----------
+load(); if (!G) newGame();
+buildBoard(); applySettings();
+fit = vp.clientWidth / BS; view.s = fit; apply();
+render(); save();
+status(boardSummary());
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
