@@ -92,7 +92,7 @@ button:disabled{opacity:.4}
 
 <div class="ov" id="menu"><div class="box">
   <button id="mSet">Settings</button><button id="mStats">Scores and history</button>
-  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button>
+  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 4</small>
 </div></div>
 
 <div class="ov" id="stats"><div class="box"><b>Scores and history</b><div id="statBody"></div>
@@ -799,7 +799,11 @@ fit = vp.clientWidth / BS; view.s = fit; apply();
 if (!G) newGame();
 render(); evaluate();
 loadSkins(); loadDict();
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator) {
+  const had = navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (had) location.reload(); });
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
 </script>
 </body>
 </html>
