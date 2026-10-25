@@ -1,0 +1,12 @@
+{
+  "name": "Island Sun",
+  "boardBg": "#0b3c5d",
+  "line": "rgba(120,80,20,0.25)",
+  "plain": { "bg": "#f6e3b4" },
+  "tw": { "bg": "#d84315", "fg": "#ffffff", "label": "\uD83C\uDF34" },
+  "dw": { "bg": "#ff8a65", "fg": "#ffffff", "label": "\uD83D\uDC1A" },
+  "tl": { "bg": "#00695c", "fg": "#ffffff", "label": "\uD83E\uDD65" },
+  "dl": { "bg": "#4dd0e1", "fg": "#ffffff", "label": "\uD83C\uDF0A" },
+  "st": { "bg": "#ff8a65", "fg": "#ffffff", "label": "\u2600\uFE0F" },
+  "tile": { "bg": "#fff8e1", "fg": "#4e342e", "border": "#bcaaa4", "radius": "8px" }
+}
