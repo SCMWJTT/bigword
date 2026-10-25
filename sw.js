@@ -1,6 +1,6 @@
 // Network-first service worker: updates arrive when online, cache is the offline fallback.
-const CACHE = 'bigword-v2';
-const FILES = ['./', 'index.html', 'config.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'enable.txt', 'common.txt', 'bad.txt'];
+const CACHE = 'bigword-v3';
+const FILES = ['./', 'index.html', 'config.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'enable.txt', 'common.txt', 'bad.txt', 'skins/index.json'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });

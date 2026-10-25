@@ -4,7 +4,7 @@
 window.CONFIG = {
   name: "Bigword",
   rackSize: 8,
-  bingo: 50,
+  bingo: 100,
   board: [
     "T...t...T...t...T",
     ".D...d.....d...D.",

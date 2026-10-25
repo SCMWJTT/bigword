@@ -16,7 +16,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .th-forest{--bg:#16261c;--pn:#24402e;--tx:#e4f0e6;--ac:#c9e265}
 .th-berry{--bg:#2a1626;--pn:#46233f;--tx:#f5e6f1;--ac:#ff8fc1}
 .th-light{--bg:#eceff3;--pn:#ffffff;--tx:#222831;--ac:#f5a623}
-.ts-classic{--tb:#f3e3b8;--tc:#3a2a10;--tr:#b79a5a;--rad:4px}
+.ts-classic,.ts-skin{--tb:#f3e3b8;--tc:#3a2a10;--tr:#b79a5a;--rad:4px}
 .ts-wood{--tb:linear-gradient(135deg,#dba96b,#b97d3f);--tc:#2b1a08;--tr:#8a5a28;--rad:4px}
 .ts-white{--tb:#ffffff;--tc:#222;--tr:#b8b8b8;--rad:4px}
 .ts-dark{--tb:#2d3340;--tc:#f2f2f2;--tr:#0e1116;--rad:4px}
@@ -24,12 +24,17 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 #top{width:100%;max-width:520px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:15px}
 #top b{font-size:17px}
 #vp{width:min(100vw,52dvh);aspect-ratio:1;overflow:hidden;position:relative;touch-action:none;background:#222}
-#board{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;will-change:transform;--ts:35px;--z:1}
+#board{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;will-change:transform;--ts:35px;--z:1;
+ --bg-plain:#fff0cc;--fg-plain:#fff;--bg-tw:#c00000;--fg-tw:#fff;--bg-dw:#ff6699;--fg-dw:#fff;--bg-tl:#0033cc;--fg-tl:#fff;--bg-dl:#5b9bd5;--fg-dl:#fff;--bg-st:#ff6699;--fg-st:#fff;--line:rgba(0,0,0,.18)}
 #board.anim{transition:transform .22s ease}
-.cell{position:relative;width:40px;height:40px;border:1px solid rgba(0,0,0,.18);background:#fff0cc;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
-.cell.has .lb{display:none}
-.cell.tgt{outline:3px solid #fff;outline-offset:-3px;z-index:2}
-.tw{background:#c00000}.dw{background:#ff6699}.st{background:#ff6699;font-size:22px}.tl{background:#0033cc}.dl{background:#5b9bd5}
+.cell{position:relative;width:40px;height:40px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.plain{background:var(--bg-plain)}
+.tw{background:var(--bg-tw);color:var(--fg-tw)}.dw{background:var(--bg-dw);color:var(--fg-dw)}.tl{background:var(--bg-tl);color:var(--fg-tl)}.dl{background:var(--bg-dl);color:var(--fg-dl)}.st{background:var(--bg-st);color:var(--fg-st)}
+.st .lb{font-size:22px}.lb.big{font-size:20px}
+.im{position:absolute;left:4px;top:3px;width:32px;height:32px;object-fit:contain;pointer-events:none}
+.mk{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:800;color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;pointer-events:none}
+.cell.has>.lb,.cell.has>.im,.cell.has>.mk{display:none}
+.cell.tgt{outline:3px solid #fff;outline-offset:-3px;z-index:2;box-shadow:inset 0 0 0 4px rgba(0,0,0,.45)}
 .tile{width:var(--ts);height:var(--ts);font-size:calc(var(--ts)*.58);position:relative;display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:var(--rad);background:var(--tb);color:var(--tc);border:1px solid var(--tr);box-shadow:0 1px 2px rgba(0,0,0,.4);touch-action:none}
 .tile i{position:absolute;right:9%;bottom:3%;font-style:normal;font-size:.42em;font-weight:600}
 .tile.blank{color:#b03a2e}
@@ -41,26 +46,32 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 #status{min-height:42px;width:100%;max-width:520px;padding:6px 12px;font-size:14px;text-align:center;line-height:1.3}
 #rack{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:4px 8px;width:100%;max-width:520px;touch-action:none}
 .slot{width:var(--ts);height:var(--ts);border-radius:4px;background:rgba(128,128,128,.18)}
+.slot.ts{outline:3px solid var(--ac)}
 .slot .tile.sel{transform:translateY(-7px);outline:2px solid var(--ac)}
 .slot .tile.lifted{opacity:.3}
-.row{display:flex;gap:8px;padding:4px 8px;width:100%;max-width:520px;justify-content:center}
-.row button{flex:1}
-button{background:var(--pn);color:var(--tx);border:1px solid rgba(128,128,128,.35);padding:11px 8px;border-radius:8px;font-size:15px;font-family:inherit}
+.row{display:flex;gap:6px;padding:4px 8px;width:100%;max-width:520px;justify-content:center}
+.row button{flex:1;min-width:0}
+button{background:var(--pn);color:var(--tx);border:1px solid rgba(128,128,128,.35);padding:11px 4px;border-radius:8px;font-size:14px;font-family:inherit}
 button:active{filter:brightness(1.25)}
 button:disabled{opacity:.4}
-#bPlay{flex:2;background:var(--ac);color:#222;font-weight:700;border-color:transparent}
+#bPlay{flex:2;background:var(--ac);color:#222;font-weight:700;border-color:transparent;font-size:15px}
 .ghost{position:fixed;pointer-events:none;z-index:20;opacity:.92;transform:translate(-50%,-50%)}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:10}
 .ov.on{display:flex}
-.box{background:var(--pn);color:var(--tx);padding:16px;border-radius:12px;width:min(92vw,360px);max-height:92dvh;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.box{background:var(--pn);color:var(--tx);padding:16px;border-radius:12px;width:min(94vw,380px);max-height:92dvh;overflow:auto;display:flex;flex-direction:column;gap:11px}
 .box label{display:flex;flex-direction:column;gap:4px;font-size:14px}
 .box label.ck{flex-direction:row;align-items:center;gap:10px}
 .box select,.box input[type=range]{font-size:16px;padding:6px;font-family:inherit}
 .box small{opacity:.75;font-size:12px}
+.box h4{margin:6px 0 0;font-size:13px;opacity:.8;text-transform:uppercase;letter-spacing:.05em}
+.box td{padding:3px 6px;font-size:14px}.box table{border-collapse:collapse;width:100%}
 #letters{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 #letters button{padding:10px 0}
 #swapList{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px 0;--ts:44px}
 #swapList .tile.sel{outline:3px solid var(--ac);transform:translateY(-5px)}
+#bagGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.bc{background:rgba(128,128,128,.22);border-radius:6px;text-align:center;padding:4px 0;font-size:13px}
+.bc b{display:block;font-size:16px}.bc.z{opacity:.35}
 </style>
 </head>
 <body class="th-slate ts-classic">
@@ -69,50 +80,59 @@ button:disabled{opacity:.4}
 <div id="status"></div>
 <div id="rack"></div>
 <div class="row"><button id="bPlay">Play</button><button id="bSwap">Swap</button><button id="bPass">Pass</button></div>
-<div class="row"><button id="bShuffle">Shuffle</button><button id="bRecall">Recall</button><button id="bFit">Fit</button><button id="bSet">Settings</button></div>
+<div class="row"><button id="bShuffle">Shuffle</button><button id="bRecall">Recall</button><button id="bBag">Bag</button><button id="bFit">Fit</button><button id="bMenu">Menu</button></div>
 
-<div class="ov" id="pick"><div class="box">
-  <div>Blank tile: choose a letter</div><div id="letters"></div><button id="pickCancel">Cancel</button>
+<div class="ov" id="pick"><div class="box"><div>Blank tile: choose a letter</div><div id="letters"></div><button id="pickCancel">Cancel</button></div></div>
+
+<div class="ov" id="swap"><div class="box"><div>Tap the tiles to swap</div><div id="swapList"></div><button id="swapGo">Swap selected</button><button id="swapCancel">Cancel</button></div></div>
+
+<div class="ov" id="end"><div class="box"><b>Game over</b><div id="endTxt"></div><button id="endNew">New game</button><button id="endClose">Close</button></div></div>
+
+<div class="ov" id="bagv"><div class="box"><b>Unseen tiles</b><small id="bagInfo"></small><div id="bagGrid"></div><button id="bagClose">Close</button></div></div>
+
+<div class="ov" id="menu"><div class="box">
+  <button id="mSet">Settings</button><button id="mStats">Scores and history</button>
+  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button>
 </div></div>
 
-<div class="ov" id="swap"><div class="box">
-  <div>Tap the tiles to swap</div><div id="swapList"></div>
-  <button id="swapGo">Swap selected</button><button id="swapCancel">Cancel</button>
-</div></div>
-
-<div class="ov" id="end"><div class="box">
-  <b>Game over</b><div id="endTxt"></div><button id="endNew">New game</button><button id="endClose">Close</button>
-</div></div>
+<div class="ov" id="stats"><div class="box"><b>Scores and history</b><div id="statBody"></div>
+  <button id="statClear">Clear history</button><button id="statClose">Close</button></div></div>
 
 <div class="ov" id="set"><div class="box">
-  <label class="ck"><input type="checkbox" id="sRare"> Prevent rare and obscene words (computer)</label>
-  <label class="ck"><input type="checkbox" id="sLuck"> Help my luck</label>
-  <small>Help my luck keeps a mix of vowels and consonants and avoids duplicate tiles, Q without U, and clusters of J, Q, X, Z, V.</small>
+  <h4>Game</h4>
+  <label>Who plays first<select id="sFirst"><option value="random">Random</option><option value="me">Me</option><option value="computer">Computer</option><option value="alternate">Take turns each game</option></select></label>
   <label>Computer level<select id="sLevel"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
+  <label class="ck"><input type="checkbox" id="sRare"> Computer avoids rare and obscene words</label>
+  <h4>Help my luck</h4>
+  <label class="ck"><input type="checkbox" id="hBal"> Balance vowels and consonants</label>
+  <label class="ck"><input type="checkbox" id="hDup"> Avoid duplicate letters</label>
+  <label class="ck"><input type="checkbox" id="hHard"> Avoid awkward tiles (Q without U, J Q X Z V together)</label>
+  <label class="ck"><input type="checkbox" id="sBagOn"> Allow viewing unseen tiles (Bag button)</label>
+  <h4>Look and feel</h4>
+  <label>Board skin<select id="sSkin"></select></label>
+  <label>Zoom while placing a tile<select id="sDz"><option value="off">Off</option><option value="low">Low</option><option value="med">Medium</option><option value="high">High</option></select></label>
   <label>Tile size (10 = standard)<input type="range" id="sSize" min="6" max="16" step="1"></label>
-  <label>Theme<select id="sTheme">
-    <option value="slate">Slate</option><option value="midnight">Midnight</option><option value="forest">Forest</option><option value="berry">Berry</option><option value="light">Light</option>
-  </select></label>
-  <label>Tile style<select id="sTiles">
-    <option value="classic">Classic ivory</option><option value="wood">Wood</option><option value="white">White</option><option value="dark">Dark</option><option value="clean">Clean</option>
-  </select></label>
-  <label>Word list<input type="file" id="sFile" accept=".txt"></label>
+  <label>Theme<select id="sTheme"><option value="slate">Slate</option><option value="midnight">Midnight</option><option value="forest">Forest</option><option value="berry">Berry</option><option value="light">Light</option></select></label>
+  <label>Tile style<select id="sTiles"><option value="classic">Classic ivory</option><option value="wood">Wood</option><option value="white">White</option><option value="dark">Dark</option><option value="clean">Clean</option><option value="skin">Skin default</option></select></label>
+  <h4>Word list</h4>
+  <label><input type="file" id="sFile" accept=".txt"></label>
   <small id="dictInfo"></small>
   <button id="sBuiltin">Use built-in ENABLE list</button>
-  <button id="sNew">New game</button>
   <button id="sClose">Close</button>
 </div></div>
 
 <script src="config.js"></script>
 <script>
 const C = window.CONFIG, N = C.board.length, CELL = 40, BS = N * CELL, MID = N >> 1;
-const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', VOW = 'AEIOU';
+const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', VOW = 'AEIOU', DZ = { off: 0, low: .9, med: 1.15, high: 1.4 };
 const $ = id => document.getElementById(id);
 const vp = $('vp'), board = $('board');
-let S = { theme: 'slate', tiles: 'classic', size: 10, noRare: true, luck: true, level: 'hard' };
+let S = { theme: 'slate', tiles: 'classic', size: 10, noRare: true, hBal: true, hDup: true, hHard: true, showBag: true,
+          level: 'hard', first: 'random', lastFirst: 'computer', dz: 'med', skin: 'classic' };
 let G = null, selected = -1, busy = true, cur = null, msg = '';
 let view = { s: 1, x: 0, y: 0 }, fit = 1;
 let W = new Set(), COMMON = new Set(), BAD = new Set(), root = {}, ownDict = false;
+let SKIN = {}, SKINS = [{ id: 'classic', name: 'Classic' }];
 const cells = [];
 document.title = C.name; $('title').textContent = C.name;
 
@@ -122,7 +142,7 @@ const save = () => { try { localStorage.setItem('bigword', JSON.stringify({ S, G
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem('bigword'));
-    if (d) { Object.assign(S, d.S); if (d.G && d.G.board && d.G.rack.length === C.rackSize) G = d.G; }
+    if (d) { Object.assign(S, d.S); if (d.G && d.G.board && d.G.rack.length === C.rackSize) { G = d.G; if (!G.st) G.st = { bingos: [0, 0], best: [['', 0], ['', 0]] }; } }
   } catch (e) {}
 }
 const idb = fn => new Promise((res, rej) => {
@@ -163,11 +183,16 @@ async function loadDict() {
 function newGame() {
   const bag = [];
   for (const ch in C.bag) for (let i = 0; i < C.bag[ch]; i++) bag.push(ch);
-  G = { bag: shuf(bag), rack: Array(C.rackSize).fill(null), crack: [], placed: [], scores: [0, 0], turn: 0, passes: 0, over: false, last: [],
+  let f = S.first;
+  if (f === 'random') f = Math.random() < .5 ? 'me' : 'computer';
+  else if (f === 'alternate') f = S.lastFirst === 'me' ? 'computer' : 'me';
+  S.lastFirst = f;
+  G = { bag: shuf(bag), rack: Array(C.rackSize).fill(null), crack: [], placed: [], scores: [0, 0], turn: f === 'me' ? 0 : 1, first: f,
+        passes: 0, over: false, last: [], st: { bingos: [0, 0], best: [['', 0], ['', 0]] },
         board: Array.from({ length: N }, () => Array(N).fill(null)) };
   for (let i = 0; i < C.rackSize; i++) G.rack[i] = drawHuman();
   for (let i = 0; i < C.rackSize; i++) G.crack.push({ ch: G.bag.pop() });
-  selected = -1; msg = 'New game. ' + (W.size ? W.size.toLocaleString() + ' words loaded.' : '');
+  selected = -1; msg = 'New game. ' + (f === 'me' ? 'You start.' : 'Computer starts.');
 }
 function okTile(ch, tiles, left) {
   if (ch === '?') return true;
@@ -179,16 +204,19 @@ function okTile(ch, tiles, left) {
     if ('JQXZV'.includes(t.ch)) hard++;
     if (t.ch === 'U') hasU = 1;
   });
-  if (same >= 2) return false;
-  if ('JQXZV'.includes(ch) && hard >= 1) return false;
-  if (ch === 'Q' && !hasU) return false;
-  const isV = VOW.includes(ch), nv = v + (isV ? 1 : 0), nc = c + (isV ? 0 : 1);
-  return nv + left >= 2 && nc + left >= 2 && nv <= 5 && nc <= 6;
+  if (S.hDup && same >= 2) return false;
+  if (S.hHard && 'JQXZV'.includes(ch) && hard >= 1) return false;
+  if (S.hHard && ch === 'Q' && !hasU) return false;
+  if (S.hBal) {
+    const isV = VOW.includes(ch), nv = v + (isV ? 1 : 0), nc = c + (isV ? 0 : 1);
+    if (!(nv + left >= 2 && nc + left >= 2 && nv <= 5 && nc <= 6)) return false;
+  }
+  return true;
 }
 function drawHuman() {
   if (!G.bag.length) return null;
   let i = G.bag.length - 1;
-  if (S.luck) {
+  if (S.hBal || S.hDup || S.hHard) {
     const tiles = G.rack.filter(Boolean), left = G.rack.filter(x => !x).length - 1;
     for (let k = 0; k < 60; k++) { const j = Math.random() * G.bag.length | 0; if (okTile(G.bag[j], tiles, left)) { i = j; break; } }
   }
@@ -241,18 +269,48 @@ function evalMove(cs) {
   return { words, total: total + bingo, bingo };
 }
 
-// ---------- board and rack drawing ----------
-const CLS = { T: 'tw', D: 'dw', t: 'tl', d: 'dl', '*': 'st', '.': '' };
-const LBL = { T: 'TW', D: 'DW', t: 'TL', d: 'DL', '*': '\u2605', '.': '' };
+// ---------- board and skins ----------
+const TYPE = { T: 'tw', D: 'dw', t: 'tl', d: 'dl', '*': 'st', '.': 'plain' };
+const STD = { tw: 'TW', dw: 'DW', tl: 'TL', dl: 'DL', st: '\u2605' };
+const DEF = { plain: { bg: '#fff0cc', fg: '#fff' }, tw: { bg: '#c00000', fg: '#fff' }, dw: { bg: '#ff6699', fg: '#fff' },
+              tl: { bg: '#0033cc', fg: '#fff' }, dl: { bg: '#5b9bd5', fg: '#fff' }, st: { bg: '#ff6699', fg: '#fff' } };
 function buildBoard() {
   board.style.width = board.style.height = BS + 'px';
   board.style.gridTemplateColumns = 'repeat(' + N + ',' + CELL + 'px)';
   for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
-    const k = C.board[r][c], d = document.createElement('div');
-    d.className = 'cell ' + CLS[k]; d.innerHTML = '<span class="lb">' + LBL[k] + '</span>';
+    const d = document.createElement('div'); d.className = 'cell ' + TYPE[C.board[r][c]];
     board.appendChild(d); cells.push(d);
   }
 }
+function applySkin(sk, id) {
+  SKIN = sk; const base = 'skins/' + id + '/', st = board.style;
+  for (const k in DEF) { const m = Object.assign({}, DEF[k], sk[k] || {}); st.setProperty('--bg-' + k, m.bg); st.setProperty('--fg-' + k, m.fg); }
+  st.setProperty('--line', sk.line || 'rgba(0,0,0,.18)');
+  st.backgroundImage = sk.boardImage ? 'url(' + base + sk.boardImage + ')' : 'none'; st.backgroundSize = '100% 100%';
+  vp.style.background = sk.boardBg || '#222';
+  cells.forEach((d, i) => {
+    const k = TYPE[C.board[(i / N) | 0][i % N]]; d.querySelectorAll('.lb,.im,.mk').forEach(e => e.remove());
+    if (k === 'plain') return;
+    const m = sk[k] || {}; let h;
+    if (m.image) h = '<img class="im" alt="" src="' + base + m.image + '"><span class="mk">' + STD[k] + '</span>';
+    else if (m.label) h = '<span class="lb big">' + m.label + '</span><span class="mk">' + STD[k] + '</span>';
+    else h = '<span class="lb">' + STD[k] + '</span>';
+    d.insertAdjacentHTML('afterbegin', h);
+  });
+  applySettings();
+}
+async function setSkin(id) {
+  let sk = {};
+  if (id !== 'classic') { try { sk = await fetch('skins/' + id + '/skin.json').then(r => r.json()); } catch (e) { id = 'classic'; } }
+  S.skin = id; applySkin(sk, id); save();
+}
+async function loadSkins() {
+  try { const l = await fetch('skins/index.json').then(r => r.json()); SKINS = [SKINS[0]].concat(l); } catch (e) {}
+  $('sSkin').innerHTML = SKINS.map(s => '<option value="' + s.id + '">' + s.name + '</option>').join('');
+  await setSkin(SKINS.some(s => s.id === S.skin) ? S.skin : 'classic');
+}
+
+// ---------- tiles and rack ----------
 function tileEl(t) {
   const e = document.createElement('div'), blank = t.ch === '?';
   e.className = 'tile' + (blank ? ' blank' : '');
@@ -303,6 +361,10 @@ function refresh() { render(); evaluate(); save(); }
 
 // ---------- placing tiles ----------
 let pending = null;
+function settle(r, c) {   // after a drop: zoom out part of the way
+  const z = DZ[S.dz]; if (!z) return;
+  const s = fit + (z - fit) * .5; if (view.s > s * 1.02) zoomTo(r, c, s);
+}
 function place(slot, r, c) {
   if (busy || G.over) return;
   const t = G.rack[slot]; if (!t) return;
@@ -313,14 +375,12 @@ function place(slot, r, c) {
 function doPlace(slot, r, c, as) {
   const t = G.rack[slot]; if (as) t.as = as;
   G.placed.push({ r, c, t, slot }); G.rack[slot] = null; selected = -1;
-  if (view.s < fit * 1.05) zoomTo(r, c, 0.8);
-  refresh();
+  settle(r, c); refresh();
 }
 function backToRack(p) {
   if (p.t.ch === '?') delete p.t.as;
   G.rack[G.rack[p.slot] === null ? p.slot : G.rack.indexOf(null)] = p.t;
 }
-function recallOne(i) { backToRack(G.placed.splice(i, 1)[0]); refresh(); }
 function recallAll() { G.placed.splice(0).forEach(backToRack); selected = -1; refresh(); }
 function shuffle() {
   if (busy) return;
@@ -338,17 +398,27 @@ $('pickCancel').onclick = () => { pending = null; $('pick').classList.remove('on
 function commitMove(who, cs, r) {
   cs.forEach(t => { G.board[t.r][t.c] = { ch: t.ch, bl: t.bl }; });
   G.scores[who] += r.total; G.last = cs.map(t => [t.r, t.c]); G.passes = 0;
+  if (cs.length === C.rackSize) G.st.bingos[who]++;
+  if (r.total > G.st.best[who][1]) G.st.best[who] = [r.words[0].w, r.total];
   if (who === 0) { G.placed = []; refillHuman(); }
   else {
     cs.forEach(t => { G.crack.splice(G.crack.findIndex(x => x.ch === (t.bl ? '?' : t.ch)), 1); });
     while (G.crack.length < C.rackSize && G.bag.length) G.crack.push({ ch: G.bag.pop() });
   }
 }
+const HK = 'bigword_hist';
+const hist = () => { try { return JSON.parse(localStorage.getItem(HK)) || []; } catch (e) { return []; } };
 function finish(out) {
   const lv = [G.rack.filter(Boolean), G.crack].map(a => a.reduce((s, t) => s + (t.ch === '?' ? 0 : C.values[t.ch]), 0));
   G.scores[0] -= lv[0]; G.scores[1] -= lv[1]; if (out >= 0) G.scores[out] += lv[1 - out];
   G.over = true; const [a, b] = G.scores;
-  $('endTxt').textContent = (a > b ? 'You win: ' : a < b ? 'Computer wins: ' : 'Draw: ') + 'You ' + a + ', Computer ' + b + '.';
+  try {
+    const h = hist(); h.push({ t: Date.now(), you: a, comp: b, first: G.first, bingos: G.st.bingos, best: G.st.best, bonus: C.bingo, skin: S.skin });
+    localStorage.setItem(HK, JSON.stringify(h.slice(-500)));
+  } catch (e) {}
+  $('endTxt').innerHTML = (a > b ? 'You win: ' : a < b ? 'Computer wins: ' : 'Draw: ') + 'You ' + a + ', Computer ' + b + '.<br>Bingos: you ' + G.st.bingos[0] +
+    ', computer ' + G.st.bingos[1] + '.<br>Best play: you ' + (G.st.best[0][1] ? G.st.best[0][0] + ' ' + G.st.best[0][1] : '-') +
+    ', computer ' + (G.st.best[1][1] ? G.st.best[1][0] + ' ' + G.st.best[1][1] : '-') + '.';
   $('end').classList.add('on'); msg = 'Game over.';
 }
 function checkEnd() {
@@ -486,14 +556,22 @@ function cellAt(x, y) {
 }
 const ptrs = new Map(); let gest = null, lastT = 0;
 vp.addEventListener('pointerdown', e => {
+  if (ptrs.size === 0 && !busy && !G.over && !drag) {
+    const q = cellAt(e.clientX, e.clientY), pi = q ? G.placed.findIndex(p => p.r === q.r && p.c === q.c) : -1;
+    if (pi >= 0) {   // a tile placed this turn: drag it instead of panning
+      drag = { src: 'board', pi, id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false }; return;
+    }
+  }
   vp.setPointerCapture(e.pointerId);
   ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY });
-  if (ptrs.size === 1) gest = { moved: false }; else gest.moved = true;
+  if (ptrs.size === 1) gest = { moved: false, two: false, mv: false };
+  else { gest.moved = true; gest.two = true; gest.t2 = Date.now(); }
 });
 vp.addEventListener('pointermove', e => {
   const p = ptrs.get(e.pointerId); if (!p) return;
+  if (Math.hypot(e.clientX - p.x0, e.clientY - p.y0) > 10) gest.mv = true;
   if (ptrs.size === 1) {
-    if (!gest.moved && Math.hypot(e.clientX - p.x0, e.clientY - p.y0) > 8) gest.moved = true;
+    if (!gest.moved && gest.mv) gest.moved = true;
     const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
     if (gest.moved) { view.x += dx; view.y += dy; apply(); }
   } else if (ptrs.size === 2) {
@@ -508,7 +586,10 @@ vp.addEventListener('pointermove', e => {
 function endPtr(e, cancelled) {
   if (!ptrs.has(e.pointerId)) return;
   ptrs.delete(e.pointerId);
-  if (ptrs.size === 0 && gest && !gest.moved && !cancelled) tap(e);
+  if (ptrs.size === 0 && gest && !cancelled) {
+    if (gest.two && !gest.mv && Date.now() - gest.t2 < 400) zoomFit();      // two-finger tap: zoom all the way out
+    else if (!gest.moved) tap(e);
+  }
 }
 vp.addEventListener('pointerup', e => endPtr(e, false));
 vp.addEventListener('pointercancel', e => endPtr(e, true));
@@ -519,76 +600,192 @@ vp.addEventListener('wheel', e => {
 function tap(e) {
   const q = cellAt(e.clientX, e.clientY); if (!q) return;
   const now = Date.now(), dbl = now - lastT < 300; lastT = now;
-  const pi = G.placed.findIndex(p => p.r === q.r && p.c === q.c);
-  if (pi >= 0) { if (!busy && !G.over) recallOne(pi); return; }
   if (selected >= 0) { place(selected, q.r, q.c); return; }
   if (dbl) { if (view.s < fit * 1.3) zoomTo(q.r, q.c, 1.0); else zoomFit(); }
 }
 
-// ---------- dragging from the rack ----------
-let drag = null, tgt = null;
-function setTgt(q) {
-  if (tgt) tgt.classList.remove('tgt');
-  tgt = q ? cells[q.r * N + q.c] : null; if (tgt) tgt.classList.add('tgt');
+// ---------- dragging tiles (rack and board) ----------
+let drag = null, tgEl = null, tsEl = null, raf = 0;
+const taken = (r, c) => G.board[r][c] || G.placed.some(p => p.r === r && p.c === c);
+function overRack(x, y) { const r = $('rack').getBoundingClientRect(); return y >= r.top - 12 && y <= r.bottom + 12 && x >= r.left && x <= r.right; }
+function slotAt(x, y) {
+  let best = 0, bd = 1e9;
+  document.querySelectorAll('#rack .slot').forEach(s => {
+    const r = s.getBoundingClientRect(), d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2));
+    if (d < bd) { bd = d; best = +s.dataset.i; }
+  });
+  return best;
+}
+function snap(x, y) {   // nearest free square to the middle of the dragged tile
+  const r = vp.getBoundingClientRect(), gx = x, gy = y - 50;
+  if (gx < r.left || gx > r.right || gy < r.top || gy > r.bottom) return null;
+  const fx = (gx - r.left - view.x) / view.s / CELL, fy = (gy - r.top - view.y) / view.s / CELL;
+  let best = null, bd = 1e9;
+  for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+    const rr = Math.floor(fy) + dr, cc = Math.floor(fx) + dc;
+    if (rr < 0 || cc < 0 || rr >= N || cc >= N || taken(rr, cc)) continue;
+    const d = Math.hypot(cc + .5 - fx, rr + .5 - fy); if (d < bd) { bd = d; best = { r: rr, c: cc }; }
+  }
+  return bd <= 2.2 ? best : null;
+}
+function updTgt() {
+  if (tgEl) tgEl.classList.remove('tgt'); if (tsEl) tsEl.classList.remove('ts'); tgEl = tsEl = null;
+  const d = drag; if (!d || !d.moved) return;
+  if (overRack(d.x, d.y)) {
+    const j = slotAt(d.x, d.y); d.tg = { rack: j };
+    tsEl = document.querySelector('#rack .slot[data-i="' + j + '"]'); if (tsEl) tsEl.classList.add('ts');
+  } else {
+    const q = snap(d.x, d.y); d.tg = q ? { cell: q } : null;
+    if (q) { tgEl = cells[q.r * N + q.c]; tgEl.classList.add('tgt'); }
+  }
+}
+function startDrag(d) {
+  d.moved = true; let el;
+  if (d.src === 'rack') { d.t = G.rack[d.i]; el = d.el; el.classList.add('lifted'); }
+  else {
+    const p = G.placed.splice(d.pi, 1)[0]; d.t = p.t; d.slot = p.slot; d.origin = { r: p.r, c: p.c };
+    el = cells[p.r * N + p.c].querySelector('.tile'); d.el = el;
+  }
+  const g = el.cloneNode(true); g.classList.add('ghost'); g.classList.remove('sel', 'lifted', 'new'); document.body.appendChild(g); d.ghost = g;
+  const z = DZ[S.dz];
+  if (z && view.s < z) {   // bring the board in close for placing
+    let r = MID, c = MID;
+    const f = d.origin || G.placed[G.placed.length - 1];
+    if (f) { r = f.r; c = f.c; }
+    else if (G.last.length) { r = G.last.reduce((a, x) => a + x[0], 0) / G.last.length | 0; c = G.last.reduce((a, x) => a + x[1], 0) / G.last.length | 0; }
+    zoomTo(r, c, z);
+  }
+  g.style.setProperty('--ts', Math.max(34, CELL * view.s * 1.25) + 'px');
+  try { document.body.setPointerCapture(d.id); } catch (e) {}
+  if (d.src === 'board') { render(); evaluate(); }
+  moveGhost(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop);
+}
+function moveGhost() { drag.ghost.style.left = drag.x + 'px'; drag.ghost.style.top = (drag.y - 50) + 'px'; updTgt(); }
+function loop() {   // pan the board when the tile is held near its edge
+  if (!drag || !drag.moved) return;
+  const r = vp.getBoundingClientRect(), gx = drag.x, gy = drag.y - 50, e = 44;
+  if (gx >= r.left && gx <= r.right && gy >= r.top - 20 && gy <= r.bottom + 20 && view.s > fit * 1.02) {
+    let vx = 0, vy = 0;
+    if (gx < r.left + e) vx = (r.left + e - gx) / e * 10; else if (gx > r.right - e) vx = -(gx - (r.right - e)) / e * 10;
+    if (gy < r.top + e) vy = (r.top + e - gy) / e * 10; else if (gy > r.bottom - e) vy = -(gy - (r.bottom - e)) / e * 10;
+    if (vx || vy) { view.x += vx; view.y += vy; apply(); updTgt(); }
+  }
+  raf = requestAnimationFrame(loop);
 }
 $('rack').addEventListener('pointerdown', e => {
-  const el = e.target.closest('.tile'); if (!el || busy || G.over) return;
-  drag = { i: +el.parentNode.dataset.i, el, x0: e.clientX, y0: e.clientY, moved: false, ghost: null };
+  const el = e.target.closest('.tile'); if (!el || busy || G.over || drag) return;
+  drag = { src: 'rack', i: +el.parentNode.dataset.i, el, id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false };
 });
 window.addEventListener('pointermove', e => {
-  if (!drag) return;
-  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) {
-    drag.moved = true;
-    const g = drag.el.cloneNode(true); g.classList.add('ghost'); g.classList.remove('sel');
-    g.style.setProperty('--ts', Math.max(34, CELL * view.s * 1.4) + 'px'); document.body.appendChild(g);
-    drag.ghost = g; drag.el.classList.add('lifted');
-  }
-  if (drag.moved) {
-    drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = (e.clientY - 50) + 'px';
-    setTgt(cellAt(e.clientX, e.clientY - 50));
-  }
+  if (!drag || e.pointerId !== drag.id) return;
+  drag.x = e.clientX; drag.y = e.clientY;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) startDrag(drag);
+  if (drag.moved) moveGhost();
 });
 function endDrag(e, cancelled) {
-  if (!drag) return;
-  const d = drag; drag = null; setTgt(null);
+  if (!drag || e.pointerId !== drag.id) return;
+  const d = drag; drag = null; cancelAnimationFrame(raf);
+  if (tgEl) tgEl.classList.remove('tgt'); if (tsEl) tsEl.classList.remove('ts'); tgEl = tsEl = null;
   if (d.ghost) d.ghost.remove();
-  if (d.moved) {
-    d.el.classList.remove('lifted'); if (cancelled) return;
-    const q = cellAt(e.clientX, e.clientY - 50);
-    if (q) place(d.i, q.r, q.c); else status('Drop the tile on a board square.');
-  } else if (!cancelled) { selected = selected === d.i ? -1 : d.i; render(); }
+  if (!d.moved) {
+    if (cancelled) return;
+    if (d.src === 'rack') { selected = selected === d.i ? -1 : d.i; render(); }
+    else { backToRack(G.placed.splice(d.pi, 1)[0]); refresh(); }
+    return;
+  }
+  const tg = d.tg;
+  if (!cancelled && tg && tg.cell) {
+    const { r, c } = tg.cell;
+    if (d.src === 'rack') place(d.i, r, c);
+    else { G.placed.push({ r, c, t: d.t, slot: d.slot }); settle(r, c); refresh(); }
+  } else if (!cancelled && tg && tg.rack != null) {
+    if (d.src === 'rack') { const i = d.i, j = tg.rack; [G.rack[i], G.rack[j]] = [G.rack[j], G.rack[i]]; refresh(); }
+    else { backToRack({ t: d.t, slot: tg.rack }); refresh(); }
+  } else {
+    if (d.src === 'board') { G.placed.push({ r: d.origin.r, c: d.origin.c, t: d.t, slot: d.slot }); refresh(); }
+    else { render(); status('Drop the tile on a board square or in the rack.'); }
+  }
 }
 window.addEventListener('pointerup', e => endDrag(e, false));
 window.addEventListener('pointercancel', e => endDrag(e, true));
 
+// ---------- bag, stats, menu ----------
+function showBag() {
+  const c = {}; G.bag.concat(G.crack.map(t => t.ch)).forEach(ch => { c[ch] = (c[ch] || 0) + 1; });
+  $('bagGrid').innerHTML = [...ABC, '?'].map(ch => { const n = c[ch] || 0; return '<div class="bc' + (n ? '' : ' z') + '"><b>' + (ch === '?' ? '?' : ch) + '</b>' + n + '</div>'; }).join('');
+  const tot = G.bag.length + G.crack.length;
+  $('bagInfo').textContent = tot + ' unseen: ' + G.bag.length + ' in the bag and ' + G.crack.length + ' on the computer rack. ? = blank.';
+  $('bagv').classList.add('on');
+}
+function showStats() {
+  const h = hist(), b = $('statBody');
+  if (!h.length) { b.innerHTML = 'No finished games yet. Cancelled games are not counted.'; $('stats').classList.add('on'); return; }
+  const n = h.length, w = h.filter(g => g.you > g.comp).length, l = h.filter(g => g.you < g.comp).length;
+  const avg = k => Math.round(h.reduce((s, g) => s + g[k], 0) / n);
+  const bi = [0, 1].map(k => h.reduce((s, g) => s + g.bingos[k], 0));
+  let bp = null; h.forEach(g => { if (g.best[0][1] && (!bp || g.best[0][1] > bp.pts)) bp = { pts: g.best[0][1], w: g.best[0][0], t: g.t }; });
+  const dt = t => new Date(t).toLocaleDateString();
+  let html = '<table><tr><td>Games</td><td>' + n + ' (won ' + w + ', lost ' + l + ', drawn ' + (n - w - l) + ')</td></tr>' +
+    '<tr><td>Average score</td><td>You ' + avg('you') + ', Computer ' + avg('comp') + '</td></tr>' +
+    '<tr><td>Best game</td><td>' + Math.max(...h.map(g => g.you)) + '</td></tr>' +
+    '<tr><td>Highest play</td><td>' + (bp ? bp.w + ' ' + bp.pts + ' (' + dt(bp.t) + ')' : '-') + '</td></tr>' +
+    '<tr><td>Bingos</td><td>You ' + bi[0] + ' (' + (bi[0] / n).toFixed(2) + ' per game), Computer ' + bi[1] + '</td></tr></table>';
+  const L = h.slice(-30), all = L.flatMap(g => [g.you, g.comp]), mn = Math.min(...all), mx = Math.max(...all), rg = Math.max(1, mx - mn);
+  const pts = k => L.map((g, i) => (L.length > 1 ? 8 + i * 284 / (L.length - 1) : 150) + ',' + (84 - (g[k] - mn) / rg * 74)).join(' ');
+  html += '<svg viewBox="0 0 300 94" width="100%"><polyline fill="none" stroke="#f5b942" stroke-width="2" points="' + pts('you') + '"/>' +
+    '<polyline fill="none" stroke="#999" stroke-width="2" points="' + pts('comp') + '"/></svg><small>Scores over the last ' + L.length + ' games. Gold = you, grey = computer.</small><table>';
+  h.slice(-10).reverse().forEach(g => { html += '<tr><td>' + dt(g.t) + '</td><td>' + g.you + ' - ' + g.comp + '</td><td>bingos ' + g.bingos[0] + '/' + g.bingos[1] + '</td><td>' + (g.best[0][1] ? g.best[0][0] + ' ' + g.best[0][1] : '') + '</td></tr>'; });
+  b.innerHTML = html + '</table>'; $('stats').classList.add('on');
+}
+
 // ---------- buttons and settings ----------
+function startNew() {
+  newGame(); ['end', 'set', 'menu'].forEach(i => $(i).classList.remove('on')); busy = false; refresh();
+  if (G.turn === 1) computerTurn();
+}
 $('bShuffle').onclick = shuffle;
 $('bRecall').onclick = () => { if (!busy && !G.over) recallAll(); };
 $('bFit').onclick = zoomFit;
-$('bSet').onclick = () => {
-  $('sSize').value = S.size; $('sTheme').value = S.theme; $('sTiles').value = S.tiles;
-  $('sRare').checked = S.noRare; $('sLuck').checked = S.luck; $('sLevel').value = S.level; $('set').classList.add('on');
+$('bBag').onclick = showBag;
+$('bagClose').onclick = () => $('bagv').classList.remove('on');
+$('bMenu').onclick = () => $('menu').classList.add('on');
+$('mClose').onclick = () => $('menu').classList.remove('on');
+$('mNew').onclick = () => { if (confirm('Cancel this game and start a new one? It will not be counted in your history.')) startNew(); };
+$('mStats').onclick = () => { $('menu').classList.remove('on'); showStats(); };
+$('statClose').onclick = () => $('stats').classList.remove('on');
+$('statClear').onclick = () => { if (confirm('Clear all game history?')) { localStorage.removeItem(HK); showStats(); } };
+$('mSet').onclick = () => {
+  $('menu').classList.remove('on');
+  $('sSize').value = S.size; $('sTheme').value = S.theme; $('sTiles').value = S.tiles; $('sSkin').value = S.skin;
+  $('sRare').checked = S.noRare; $('hBal').checked = S.hBal; $('hDup').checked = S.hDup; $('hHard').checked = S.hHard; $('sBagOn').checked = S.showBag;
+  $('sLevel').value = S.level; $('sFirst').value = S.first; $('sDz').value = S.dz; $('set').classList.add('on');
 };
 $('sClose').onclick = () => $('set').classList.remove('on');
 $('sSize').oninput = e => { S.size = +e.target.value; sizes(); save(); };
 $('sTheme').onchange = e => { S.theme = e.target.value; applySettings(); save(); };
 $('sTiles').onchange = e => { S.tiles = e.target.value; applySettings(); save(); };
-$('sRare').onchange = e => { S.noRare = e.target.checked; save(); };
-$('sLuck').onchange = e => { S.luck = e.target.checked; save(); };
-$('sLevel').onchange = e => { S.level = e.target.value; save(); };
+$('sSkin').onchange = e => setSkin(e.target.value);
+[['sRare', 'noRare'], ['hBal', 'hBal'], ['hDup', 'hDup'], ['hHard', 'hHard'], ['sBagOn', 'showBag']].forEach(([id, k]) => {
+  $(id).onchange = e => { S[k] = e.target.checked; applySettings(); save(); };
+});
+[['sLevel', 'level'], ['sFirst', 'first'], ['sDz', 'dz']].forEach(([id, k]) => { $(id).onchange = e => { S[k] = e.target.value; save(); }; });
 $('sFile').onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   const t = await f.text(); await idb(s => s.put(t, 'dict'));
   $('set').classList.remove('on'); await loadDict(); status(msg);
 };
 $('sBuiltin').onclick = async () => { await idb(s => s.delete('dict')); $('set').classList.remove('on'); await loadDict(); status(msg); };
-function startNew() { newGame(); $('end').classList.remove('on'); $('set').classList.remove('on'); busy = false; refresh(); }
-$('sNew').onclick = () => { if (confirm('Start a new game?')) startNew(); };
 $('endNew').onclick = startNew;
 $('endClose').onclick = () => $('end').classList.remove('on');
 function applySettings() {
-  document.body.className = 'th-' + S.theme + ' ts-' + S.tiles;
-  document.querySelector('meta[name=theme-color]').content = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#2b3038';
+  const b = document.body; b.className = 'th-' + S.theme + ' ts-' + S.tiles;
+  ['--tb', '--tc', '--tr', '--rad'].forEach(p => b.style.removeProperty(p));
+  if (S.tiles === 'skin' && SKIN.tile) {
+    b.style.setProperty('--tb', SKIN.tile.bg); b.style.setProperty('--tc', SKIN.tile.fg);
+    b.style.setProperty('--tr', SKIN.tile.border); b.style.setProperty('--rad', SKIN.tile.radius || '4px');
+  }
+  $('bBag').style.display = S.showBag ? '' : 'none';
+  document.querySelector('meta[name=theme-color]').content = getComputedStyle(b).getPropertyValue('--bg').trim() || '#2b3038';
   sizes();
 }
 window.addEventListener('resize', () => {
@@ -601,7 +798,7 @@ load(); applySettings(); buildBoard();
 fit = vp.clientWidth / BS; view.s = fit; apply();
 if (!G) newGame();
 render(); evaluate();
-loadDict();
+loadSkins(); loadDict();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
