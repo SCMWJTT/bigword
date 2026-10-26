@@ -1,0 +1,11 @@
+{
+  "name": "Night (dark board)",
+  "boardBg": "#05080d",
+  "line": "rgba(255,255,255,0.10)",
+  "plain": { "bg": "#1d2430" },
+  "tw": { "bg": "#c62828", "fg": "#ffffff" },
+  "dw": { "bg": "#b83b7a", "fg": "#ffffff" },
+  "tl": { "bg": "#2455e6", "fg": "#ffffff" },
+  "dl": { "bg": "#2f8fbf", "fg": "#ffffff" },
+  "st": { "bg": "#b83b7a", "fg": "#ffffff" }
+}

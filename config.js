@@ -5,6 +5,9 @@ window.CONFIG = {
   name: "Bigword",
   rackSize: 8,
   bingo: 100,
+  // Help my luck: pairs = pairs of the same letter always allowed in a rack, pairChance = % chance a draw may allow one pair,
+  // vmin/vmax = allowed vowels in a rack (a blank counts as either).
+  luck: { pairs: 0, pairChance: 10, vmin: 3, vmax: 4 },
   board: [
     "T...t...T...t...T",
     ".D...d.....d...D.",

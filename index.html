@@ -19,12 +19,12 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .ts-classic,.ts-skin{--tb:#f3e3b8;--tc:#3a2a10;--tr:#b79a5a;--rad:4px}
 .ts-wood{--tb:linear-gradient(135deg,#dba96b,#b97d3f);--tc:#2b1a08;--tr:#8a5a28;--rad:4px}
 .ts-white{--tb:#ffffff;--tc:#222;--tr:#b8b8b8;--rad:4px}
-.ts-dark{--tb:#2d3340;--tc:#f2f2f2;--tr:#0e1116;--rad:4px}
+.ts-dark{--tb:#1f2733;--tc:#ffffff;--tr:#9fb3d1;--rad:4px}
 .ts-clean{--tb:#f7f7f9;--tc:#333;--tr:#d0d0d6;--rad:9px}
 #top{width:100%;max-width:520px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:15px}
 #top b{font-size:17px}
 #vp{width:min(100vw,52dvh);aspect-ratio:1;overflow:hidden;position:relative;touch-action:none;background:#222}
-#board{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;will-change:transform;--ts:35px;--z:1;
+#board{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;will-change:transform;--ts:38px;--z:1;
  --bg-plain:#fff0cc;--fg-plain:#fff;--bg-tw:#c00000;--fg-tw:#fff;--bg-dw:#ff6699;--fg-dw:#fff;--bg-tl:#0033cc;--fg-tl:#fff;--bg-dl:#5b9bd5;--fg-dl:#fff;--bg-st:#ff6699;--fg-st:#fff;--line:rgba(0,0,0,.18)}
 #board.anim{transition:transform .22s ease}
 .cell{position:relative;width:40px;height:40px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
@@ -35,10 +35,11 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
 .mk{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:800;color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;pointer-events:none}
 .cell.has>.lb,.cell.has>.im,.cell.has>.mk{display:none}
 .cell.tgt{outline:3px solid #fff;outline-offset:-3px;z-index:2;box-shadow:inset 0 0 0 4px rgba(0,0,0,.45)}
-.tile{width:var(--ts);height:var(--ts);font-size:calc(var(--ts)*.58);position:relative;display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:var(--rad);background:var(--tb);color:var(--tc);border:1px solid var(--tr);box-shadow:0 1px 2px rgba(0,0,0,.4);touch-action:none}
-.tile i{position:absolute;right:9%;bottom:3%;font-style:normal;font-size:.42em;font-weight:600}
+.tile{width:var(--ts);height:var(--ts);font-size:calc(var(--ts)*.58*var(--lsz,1));position:relative;display:flex;align-items:center;justify-content:center;font-weight:800;border-radius:var(--rad);background:var(--tb);color:var(--tc);border:1px solid var(--tr);box-shadow:0 1px 2px rgba(0,0,0,.4);touch-action:none}
+.tile i{position:absolute;right:7%;bottom:2%;font-style:normal;font-size:calc(var(--ts)*.28*var(--psz,1));font-weight:700;line-height:1}
 .tile.blank{color:#b03a2e}
-.cell .tile{font-size:20px}
+.cell .tile{border-width:2px;box-shadow:0 0 0 1px rgba(0,0,0,.6),0 2px 3px rgba(0,0,0,.5)}
+.cell .prev{opacity:.6;pointer-events:none;outline:none!important}
 .cell .tile.new{outline:2px solid #ffd54a}
 .cell.last .tile{box-shadow:0 0 0 2px #2e8bff}
 .bd{position:absolute;left:-3px;top:-8px;z-index:3;background:#0a57c2;color:#fff;border-radius:9px;padding:1px 5px;font-size:max(11px,calc(9px/var(--z)));font-weight:700;line-height:1.2;pointer-events:none}
@@ -92,7 +93,7 @@ button:disabled{opacity:.4}
 
 <div class="ov" id="menu"><div class="box">
   <button id="mSet">Settings</button><button id="mStats">Scores and history</button>
-  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 4</small>
+  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 5</small>
 </div></div>
 
 <div class="ov" id="stats"><div class="box"><b>Scores and history</b><div id="statBody"></div>
@@ -110,8 +111,10 @@ button:disabled{opacity:.4}
   <label class="ck"><input type="checkbox" id="sBagOn"> Allow viewing unseen tiles (Bag button)</label>
   <h4>Look and feel</h4>
   <label>Board skin<select id="sSkin"></select></label>
-  <label>Zoom while placing a tile<select id="sDz"><option value="off">Off</option><option value="low">Low</option><option value="med">Medium</option><option value="high">High</option></select></label>
+  <label>Zoom when holding a tile over the board<select id="sDz"><option value="off">Off</option><option value="low">Low</option><option value="med">Medium</option><option value="high">High</option></select></label>
   <label>Tile size (10 = standard)<input type="range" id="sSize" min="6" max="16" step="1"></label>
+  <label>Letter size<input type="range" id="sLsz" min="80" max="150" step="5"></label>
+  <label>Points size<input type="range" id="sPsz" min="70" max="170" step="10"></label>
   <label>Theme<select id="sTheme"><option value="slate">Slate</option><option value="midnight">Midnight</option><option value="forest">Forest</option><option value="berry">Berry</option><option value="light">Light</option></select></label>
   <label>Tile style<select id="sTiles"><option value="classic">Classic ivory</option><option value="wood">Wood</option><option value="white">White</option><option value="dark">Dark</option><option value="clean">Clean</option><option value="skin">Skin default</option></select></label>
   <h4>Word list</h4>
@@ -122,13 +125,15 @@ button:disabled{opacity:.4}
 </div></div>
 
 <script src="config.js"></script>
+<script src="dev.js"></script>
 <script>
 const C = window.CONFIG, N = C.board.length, CELL = 40, BS = N * CELL, MID = N >> 1;
+C.luck = C.luck || { pairs: 0, pairChance: 10, vmin: 3, vmax: 4 };
 const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', VOW = 'AEIOU', DZ = { off: 0, low: .9, med: 1.15, high: 1.4 };
 const $ = id => document.getElementById(id);
 const vp = $('vp'), board = $('board');
 let S = { theme: 'slate', tiles: 'classic', size: 10, noRare: true, hBal: true, hDup: true, hHard: true, showBag: true,
-          level: 'hard', first: 'random', lastFirst: 'computer', dz: 'med', skin: 'classic' };
+          level: 'hard', first: 'random', lastFirst: 'computer', dz: 'med', skin: 'classic', lsz: 100, psz: 100 };
 let G = null, selected = -1, busy = true, cur = null, msg = '';
 let view = { s: 1, x: 0, y: 0 }, fit = 1;
 let W = new Set(), COMMON = new Set(), BAD = new Set(), root = {}, ownDict = false;
@@ -194,33 +199,45 @@ function newGame() {
   for (let i = 0; i < C.rackSize; i++) G.crack.push({ ch: G.bag.pop() });
   selected = -1; msg = 'New game. ' + (f === 'me' ? 'You start.' : 'Computer starts.');
 }
-function okTile(ch, tiles, left) {
-  if (ch === '?') return true;
-  let v = 0, c = 0, same = 0, hard = 0, hasU = 0;
+// Picks one tile for the player's rack. tiles = tiles already in the rack, left = slots still to fill after this one.
+// f = {dup, bal, hard} switches, L = {pairs, vmin, vmax}. Rules are relaxed in steps only if nothing in the bag fits.
+function pickTile(bag, tiles, left, f, L) {
+  const cnt = {}; bag.forEach(ch => { cnt[ch] = (cnt[ch] || 0) + 1; });
+  let v = 0, b = 0, hard = 0, hasU = 0; const have = {};
   tiles.forEach(t => {
-    if (t.ch === '?') { v += .5; c += .5; hasU = 1; return; }
-    if (VOW.includes(t.ch)) v++; else c++;
-    if (t.ch === ch) same++;
+    if (t.ch === '?') { b++; hasU = 1; return; }
+    have[t.ch] = (have[t.ch] || 0) + 1;
+    if (VOW.includes(t.ch)) v++;
     if ('JQXZV'.includes(t.ch)) hard++;
     if (t.ch === 'U') hasU = 1;
   });
-  if (S.hDup && same >= 2) return false;
-  if (S.hHard && 'JQXZV'.includes(ch) && hard >= 1) return false;
-  if (S.hHard && ch === 'Q' && !hasU) return false;
-  if (S.hBal) {
-    const isV = VOW.includes(ch), nv = v + (isV ? 1 : 0), nc = c + (isV ? 0 : 1);
-    if (!(nv + left >= 2 && nc + left >= 2 && nv <= 5 && nc <= 6)) return false;
+  const pairs = Object.values(have).filter(x => x === 2).length;
+  const extra = Math.random() * 100 < (L.pairChance || 0) ? 1 : 0;   // sometimes allow one pair
+  const ok = (ch, lv) => {   // lv 0 = all rules, 1 = drop awkward, 2 = allow one extra pair, 3 = anything
+    if (lv >= 3 || ch === '?') return true;
+    const h = have[ch] || 0, isV = VOW.includes(ch);
+    if (f.dup) { if (h >= 2) return false; if (h === 1 && pairs >= L.pairs + extra + (lv >= 2 ? 1 : 0)) return false; }
+    if (f.hard && lv < 1) { if ('JQXZV'.includes(ch) && hard >= 1) return false; if (ch === 'Q' && !hasU) return false; }
+    if (f.bal && lv < 2) { const nv = v + (isV ? 1 : 0); if (nv > L.vmax || nv + b + left < L.vmin) return false; }
+    return true;
+  };
+  for (let lv = 0; lv < 4; lv++) {
+    const c = Object.keys(cnt).filter(ch => ok(ch, lv));
+    if (c.length) {
+      let x = Math.random() * c.reduce((s, ch) => s + cnt[ch], 0);
+      for (const ch of c) { x -= cnt[ch]; if (x < 0) return ch; }
+      return c[c.length - 1];
+    }
   }
-  return true;
+  return bag[0];
 }
+const luckFlags = () => ({ dup: S.hDup, bal: S.hBal, hard: S.hHard });
+window.BW = { pickTile, luckFlags };
 function drawHuman() {
   if (!G.bag.length) return null;
-  let i = G.bag.length - 1;
-  if (S.hBal || S.hDup || S.hHard) {
-    const tiles = G.rack.filter(Boolean), left = G.rack.filter(x => !x).length - 1;
-    for (let k = 0; k < 60; k++) { const j = Math.random() * G.bag.length | 0; if (okTile(G.bag[j], tiles, left)) { i = j; break; } }
-  }
-  return { ch: G.bag.splice(i, 1)[0] };
+  const tiles = G.rack.filter(Boolean), left = G.rack.filter(x => !x).length - 1;
+  const ch = pickTile(G.bag, tiles, left, luckFlags(), C.luck);
+  G.bag.splice(G.bag.indexOf(ch), 1); return { ch };
 }
 function refillHuman() { for (let i = 0; i < C.rackSize; i++) if (!G.rack[i]) { const t = drawHuman(); if (t) G.rack[i] = t; } }
 
@@ -329,12 +346,7 @@ function render() {
   }
   G.last.forEach(([r, c]) => cells[r * N + c].classList.add('last'));
   G.placed.forEach(p => { const d = cells[p.r * N + p.c], e = tileEl(p.t); e.classList.add('new'); d.appendChild(e); d.classList.add('has'); });
-  const rack = $('rack'); rack.innerHTML = '';
-  G.rack.forEach((t, i) => {
-    const s = document.createElement('div'); s.className = 'slot'; s.dataset.i = i;
-    if (t) { const e = tileEl(t); if (i === selected) e.classList.add('sel'); s.appendChild(e); }
-    rack.appendChild(s);
-  });
+  drawRack(G.rack, -1, -1);
   $('bag').textContent = 'Bag ' + G.bag.length;
   $('sc').textContent = 'You ' + G.scores[0] + '  Computer ' + G.scores[1];
 }
@@ -361,9 +373,11 @@ function refresh() { render(); evaluate(); save(); }
 
 // ---------- placing tiles ----------
 let pending = null;
-function settle(r, c) {   // after a drop: zoom out part of the way
+function settle(r, c) {   // after a drop: zoom out part of the way, keeping the dropped square where it is on screen
   const z = DZ[S.dz]; if (!z) return;
-  const s = fit + (z - fit) * .5; if (view.s > s * 1.02) zoomTo(r, c, s);
+  const t = fit + (z - fit) * .5; if (view.s <= t * 1.02) return;
+  const cx = view.x + (c + .5) * CELL * view.s, cy = view.y + (r + .5) * CELL * view.s;
+  animate(); zoomAt(cx, cy, t / view.s);
 }
 function place(slot, r, c) {
   if (busy || G.over) return;
@@ -605,9 +619,25 @@ function tap(e) {
 }
 
 // ---------- dragging tiles (rack and board) ----------
-let drag = null, tgEl = null, tsEl = null, raf = 0;
+const OFF = 34;   // how far the tile floats above the fingertip
+let drag = null, tgEl = null, raf = 0;
 const taken = (r, c) => G.board[r][c] || G.placed.some(p => p.r === r && p.c === c);
-function overRack(x, y) { const r = $('rack').getBoundingClientRect(); return y >= r.top - 12 && y <= r.bottom + 12 && x >= r.left && x <= r.right; }
+function insertAt(a, t, j) {   // put t at slot j; neighbours slide over into the nearest gap
+  if (!a[j]) { a[j] = t; return; }
+  let e = -1, bd = 99; a.forEach((x, k) => { if (!x && Math.abs(k - j) < bd) { bd = Math.abs(k - j); e = k; } });
+  if (e < 0) { a[j] = t; return; }
+  if (e > j) for (let k = e; k > j; k--) a[k] = a[k - 1]; else for (let k = e; k < j; k++) a[k] = a[k + 1];
+  a[j] = t;
+}
+function drawRack(arr, hi, lift) {
+  const rack = $('rack'); rack.innerHTML = '';
+  arr.forEach((t, i) => {
+    const s = document.createElement('div'); s.className = 'slot' + (i === hi ? ' ts' : ''); s.dataset.i = i;
+    if (t && !t.ph) { const e = tileEl(t); if (i === selected) e.classList.add('sel'); if (i === lift) e.classList.add('lifted'); s.appendChild(e); }
+    rack.appendChild(s);
+  });
+}
+function overRack(x, y) { const r = $('rack').getBoundingClientRect(); return y >= r.top - 34 && x >= r.left - 16 && x <= r.right + 16; }
 function slotAt(x, y) {
   let best = 0, bd = 1e9;
   document.querySelectorAll('#rack .slot').forEach(s => {
@@ -617,7 +647,7 @@ function slotAt(x, y) {
   return best;
 }
 function snap(x, y) {   // nearest free square to the middle of the dragged tile
-  const r = vp.getBoundingClientRect(), gx = x, gy = y - 50;
+  const r = vp.getBoundingClientRect(), gx = x, gy = y - OFF;
   if (gx < r.left || gx > r.right || gy < r.top || gy > r.bottom) return null;
   const fx = (gx - r.left - view.x) / view.s / CELL, fy = (gy - r.top - view.y) / view.s / CELL;
   let best = null, bd = 1e9;
@@ -628,42 +658,56 @@ function snap(x, y) {   // nearest free square to the middle of the dragged tile
   }
   return bd <= 2.2 ? best : null;
 }
+function clearTgt() {
+  if (tgEl) { tgEl.classList.remove('tgt', 'has'); tgEl.querySelectorAll('.prev').forEach(e => e.remove()); tgEl = null; }
+}
 function updTgt() {
-  if (tgEl) tgEl.classList.remove('tgt'); if (tsEl) tsEl.classList.remove('ts'); tgEl = tsEl = null;
+  clearTgt();
   const d = drag; if (!d || !d.moved) return;
   if (overRack(d.x, d.y)) {
     const j = slotAt(d.x, d.y); d.tg = { rack: j };
-    tsEl = document.querySelector('#rack .slot[data-i="' + j + '"]'); if (tsEl) tsEl.classList.add('ts');
+    if (d.lastJ !== j) {   // show the rack with a gap where the tile will go
+      const a = G.rack.slice(); if (d.src === 'rack') a[d.i] = null;
+      insertAt(a, { ph: 1 }, j); drawRack(a, j, -1); d.lastJ = j;
+    }
   } else {
+    if (d.lastJ != null) { drawRack(G.rack, -1, d.src === 'rack' ? d.i : -1); d.lastJ = null; }
     const q = snap(d.x, d.y); d.tg = q ? { cell: q } : null;
-    if (q) { tgEl = cells[q.r * N + q.c]; tgEl.classList.add('tgt'); }
+    if (q) {   // outline the square and preview the letter in it
+      tgEl = cells[q.r * N + q.c]; tgEl.classList.add('tgt', 'has');
+      const p = tileEl(d.t); p.classList.add('prev'); tgEl.appendChild(p);
+    }
   }
 }
+function ghostSize() { drag.ghost.style.setProperty('--ts', Math.max(34, CELL * view.s * 1.25) + 'px'); }
 function startDrag(d) {
   d.moved = true; let el;
   if (d.src === 'rack') { d.t = G.rack[d.i]; el = d.el; el.classList.add('lifted'); }
   else {
     const p = G.placed.splice(d.pi, 1)[0]; d.t = p.t; d.slot = p.slot; d.origin = { r: p.r, c: p.c };
-    el = cells[p.r * N + p.c].querySelector('.tile'); d.el = el;
+    el = cells[p.r * N + p.c].querySelector('.tile');
   }
-  const g = el.cloneNode(true); g.classList.add('ghost'); g.classList.remove('sel', 'lifted', 'new'); document.body.appendChild(g); d.ghost = g;
-  const z = DZ[S.dz];
-  if (z && view.s < z) {   // bring the board in close for placing
-    let r = MID, c = MID;
-    const f = d.origin || G.placed[G.placed.length - 1];
-    if (f) { r = f.r; c = f.c; }
-    else if (G.last.length) { r = G.last.reduce((a, x) => a + x[0], 0) / G.last.length | 0; c = G.last.reduce((a, x) => a + x[1], 0) / G.last.length | 0; }
-    zoomTo(r, c, z);
-  }
-  g.style.setProperty('--ts', Math.max(34, CELL * view.s * 1.25) + 'px');
+  const g = el.cloneNode(true); g.classList.add('ghost'); g.classList.remove('sel', 'lifted', 'new', 'prev');
+  document.body.appendChild(g); d.ghost = g; ghostSize();
   try { document.body.setPointerCapture(d.id); } catch (e) {}
   if (d.src === 'board') { render(); evaluate(); }
+  d.hx = d.x; d.hy = d.y; d.ht = setTimeout(holdZoom, 450);
   moveGhost(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop);
 }
-function moveGhost() { drag.ghost.style.left = drag.x + 'px'; drag.ghost.style.top = (drag.y - 50) + 'px'; updTgt(); }
+function moveGhost() {
+  const d = drag; d.ghost.style.left = d.x + 'px'; d.ghost.style.top = (d.y - OFF) + 'px'; updTgt();
+  if (Math.hypot(d.x - d.hx, d.y - d.hy) > 14) { d.hx = d.x; d.hy = d.y; clearTimeout(d.ht); d.ht = setTimeout(holdZoom, 450); }
+}
+function holdZoom() {   // tile held still over the board: zoom in around the spot under the tile
+  const d = drag; if (!d || !d.moved) return;
+  const z = DZ[S.dz]; if (!z || view.s >= z * .98) return;
+  const r = vp.getBoundingClientRect(), gx = d.x, gy = d.y - OFF;
+  if (gx < r.left || gx > r.right || gy < r.top || gy > r.bottom) return;
+  animate(); zoomAt(gx - r.left, gy - r.top, z / view.s); ghostSize(); updTgt();
+}
 function loop() {   // pan the board when the tile is held near its edge
   if (!drag || !drag.moved) return;
-  const r = vp.getBoundingClientRect(), gx = drag.x, gy = drag.y - 50, e = 44;
+  const r = vp.getBoundingClientRect(), gx = drag.x, gy = drag.y - OFF, e = 44;
   if (gx >= r.left && gx <= r.right && gy >= r.top - 20 && gy <= r.bottom + 20 && view.s > fit * 1.02) {
     let vx = 0, vy = 0;
     if (gx < r.left + e) vx = (r.left + e - gx) / e * 10; else if (gx > r.right - e) vx = -(gx - (r.right - e)) / e * 10;
@@ -684,8 +728,10 @@ window.addEventListener('pointermove', e => {
 });
 function endDrag(e, cancelled) {
   if (!drag || e.pointerId !== drag.id) return;
-  const d = drag; drag = null; cancelAnimationFrame(raf);
-  if (tgEl) tgEl.classList.remove('tgt'); if (tsEl) tsEl.classList.remove('ts'); tgEl = tsEl = null;
+  const d = drag;
+  if (d.moved) { d.x = e.clientX; d.y = e.clientY; updTgt(); }
+  drag = null; cancelAnimationFrame(raf); clearTimeout(d.ht);
+  const tg = d.tg; clearTgt();
   if (d.ghost) d.ghost.remove();
   if (!d.moved) {
     if (cancelled) return;
@@ -693,18 +739,17 @@ function endDrag(e, cancelled) {
     else { backToRack(G.placed.splice(d.pi, 1)[0]); refresh(); }
     return;
   }
-  const tg = d.tg;
+  drawRack(G.rack, -1, -1);
   if (!cancelled && tg && tg.cell) {
     const { r, c } = tg.cell;
     if (d.src === 'rack') place(d.i, r, c);
     else { G.placed.push({ r, c, t: d.t, slot: d.slot }); settle(r, c); refresh(); }
-  } else if (!cancelled && tg && tg.rack != null) {
-    if (d.src === 'rack') { const i = d.i, j = tg.rack; [G.rack[i], G.rack[j]] = [G.rack[j], G.rack[i]]; refresh(); }
-    else { backToRack({ t: d.t, slot: tg.rack }); refresh(); }
-  } else {
-    if (d.src === 'board') { G.placed.push({ r: d.origin.r, c: d.origin.c, t: d.t, slot: d.slot }); refresh(); }
-    else { render(); status('Drop the tile on a board square or in the rack.'); }
-  }
+  } else if (!cancelled && tg && tg.rack != null) {   // insert into the rack where it was dropped
+    if (d.src === 'rack') { const t = G.rack[d.i]; G.rack[d.i] = null; insertAt(G.rack, t, tg.rack); }
+    else { if (d.t.ch === '?') delete d.t.as; insertAt(G.rack, d.t, tg.rack); }
+    selected = -1; refresh();
+  } else if (d.src === 'board') { G.placed.push({ r: d.origin.r, c: d.origin.c, t: d.t, slot: d.slot }); refresh(); }
+  else status('Missed. The tile went back where it was.');
 }
 window.addEventListener('pointerup', e => endDrag(e, false));
 window.addEventListener('pointercancel', e => endDrag(e, true));
@@ -756,12 +801,14 @@ $('statClose').onclick = () => $('stats').classList.remove('on');
 $('statClear').onclick = () => { if (confirm('Clear all game history?')) { localStorage.removeItem(HK); showStats(); } };
 $('mSet').onclick = () => {
   $('menu').classList.remove('on');
-  $('sSize').value = S.size; $('sTheme').value = S.theme; $('sTiles').value = S.tiles; $('sSkin').value = S.skin;
+  $('sSize').value = S.size; $('sLsz').value = S.lsz; $('sPsz').value = S.psz; $('sTheme').value = S.theme; $('sTiles').value = S.tiles; $('sSkin').value = S.skin;
   $('sRare').checked = S.noRare; $('hBal').checked = S.hBal; $('hDup').checked = S.hDup; $('hHard').checked = S.hHard; $('sBagOn').checked = S.showBag;
   $('sLevel').value = S.level; $('sFirst').value = S.first; $('sDz').value = S.dz; $('set').classList.add('on');
 };
 $('sClose').onclick = () => $('set').classList.remove('on');
 $('sSize').oninput = e => { S.size = +e.target.value; sizes(); save(); };
+$('sLsz').oninput = e => { S.lsz = +e.target.value; applySettings(); save(); };
+$('sPsz').oninput = e => { S.psz = +e.target.value; applySettings(); save(); };
 $('sTheme').onchange = e => { S.theme = e.target.value; applySettings(); save(); };
 $('sTiles').onchange = e => { S.tiles = e.target.value; applySettings(); save(); };
 $('sSkin').onchange = e => setSkin(e.target.value);
@@ -780,6 +827,7 @@ $('endClose').onclick = () => $('end').classList.remove('on');
 function applySettings() {
   const b = document.body; b.className = 'th-' + S.theme + ' ts-' + S.tiles;
   ['--tb', '--tc', '--tr', '--rad'].forEach(p => b.style.removeProperty(p));
+  b.style.setProperty('--lsz', S.lsz / 100); b.style.setProperty('--psz', S.psz / 100);
   if (S.tiles === 'skin' && SKIN.tile) {
     b.style.setProperty('--tb', SKIN.tile.bg); b.style.setProperty('--tc', SKIN.tile.fg);
     b.style.setProperty('--tr', SKIN.tile.border); b.style.setProperty('--rad', SKIN.tile.radius || '4px');
