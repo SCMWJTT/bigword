@@ -5,9 +5,14 @@ window.CONFIG = {
   name: "Bigword",
   rackSize: 8,
   bingo: 100,
-  // Help my luck: pairs = pairs of the same letter always allowed in a rack, pairChance = % chance a draw may allow one pair,
-  // vmin/vmax = allowed vowels in a rack (a blank counts as either).
-  luck: { pairs: 0, pairChance: 10, vmin: 3, vmax: 4 },
+  // Help my luck. pairs = pairs of the same letter always allowed in a rack, pairChance = % chance a draw may allow one pair,
+  // vmin/vmax = hard limits on vowels in a rack (a blank counts as either), vowelPct = soft target share of vowels (0 = off),
+  // tierW = draw weight for tile tiers 1-4 (see tiers below), maxHigh = most tier 3-4 tiles allowed in a rack.
+  luck: { pairs: 0, pairChance: 10, vmin: 3, vmax: 4, vowelPct: 44, tierW: [1, 1, 1, 1], maxHigh: 8 },
+  // Testing options (also on the developer page).
+  dev: { confirmRestart: false, noSBlank: false },
+  // Tile tiers: 1 = super common, 2 = common, 3 = mid, 4 = rare.
+  tiers: { R:1, S:1, T:1, N:1, E:1, A:1, D:2, G:2, I:2, L:2, O:2, U:2, C:2, M:2, H:2, B:3, F:3, P:3, W:3, Y:3, K:3, V:3, J:4, X:4, Q:4, Z:4 },
   board: [
     "T...t...T...t...T",
     ".D...d.....d...D.",
