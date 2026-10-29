@@ -102,7 +102,7 @@ button:disabled{opacity:.4}
 
 <div class="ov" id="menu"><div class="box">
   <button id="mSet">Settings</button><button id="mStats">Scores and history</button>
-  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 6</small>
+  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 7</small>
 </div></div>
 
 <div class="ov" id="stats"><div class="box"><b>Scores and history</b><div id="statBody"></div>
@@ -208,17 +208,14 @@ function newGame() {
   G = { bag: shuf(bag), rack: Array(C.rackSize).fill(null), crack: [], placed: [], scores: [0, 0], turn: f === 'me' ? 0 : 1, first: f,
         passes: 0, over: false, last: [], st: { bingos: [0, 0], best: [['', 0], ['', 0]] },
         board: Array.from({ length: N }, () => Array(N).fill(null)) };
-  if (C.dev.noSBlank) {   // test variation: first racks have one blank and no S (both players)
-    const blank = () => { const i = G.bag.indexOf('?'); return i >= 0 ? G.bag.splice(i, 1)[0] : null; };
-    const noS = () => { const ix = []; G.bag.forEach((ch, i) => { if (ch !== 'S') ix.push(i); }); return ix.length ? G.bag.splice(ix[Math.random() * ix.length | 0], 1)[0] : null; };
-    const hb = blank(); if (hb) G.rack[0] = { ch: hb };
-    for (let i = 0; i < C.rackSize; i++) if (!G.rack[i]) { const t = drawHuman('S'); if (t) G.rack[i] = t; }
-    const cb = blank(); if (cb) G.crack.push({ ch: cb });
-    while (G.crack.length < C.rackSize) { const ch = noS(); if (!ch) break; G.crack.push({ ch }); }
-  } else {
-    for (let i = 0; i < C.rackSize; i++) G.rack[i] = drawHuman();
-    for (let i = 0; i < C.rackSize; i++) G.crack.push({ ch: G.bag.pop() });
-  }
+  // test variation: only the player who goes first gets one blank and no S in the first rack
+  const T = C.dev.noSBlank, meFirst = T && f === 'me', cpuFirst = T && f === 'computer';
+  const blank = () => { const i = G.bag.indexOf('?'); return i >= 0 ? G.bag.splice(i, 1)[0] : null; };
+  const noS = () => { const ix = []; G.bag.forEach((ch, i) => { if (ch !== 'S') ix.push(i); }); return ix.length ? G.bag.splice(ix[Math.random() * ix.length | 0], 1)[0] : null; };
+  if (meFirst) { const hb = blank(); if (hb) G.rack[0] = { ch: hb }; }
+  for (let i = 0; i < C.rackSize; i++) if (!G.rack[i]) { const t = drawHuman(meFirst ? 'S' : undefined); if (t) G.rack[i] = t; }
+  if (cpuFirst) { const cb = blank(); if (cb) G.crack.push({ ch: cb }); }
+  while (G.crack.length < C.rackSize) { const ch = cpuFirst ? noS() : G.bag.pop(); if (!ch) break; G.crack.push({ ch }); }
   selected = -1; msg = 'New game. ' + (f === 'me' ? 'You start.' : 'Computer starts.');
 }
 // Picks one tile for the player's rack. tiles = tiles already in the rack, left = slots still to fill after this one,
@@ -707,7 +704,7 @@ function light(b) {   // cheap update after a tile moves: no full board rebuild
 function cellTileRemove(r, c) { const d = cells[r * N + c]; d.querySelectorAll('.tile').forEach(e => e.remove()); d.classList.remove('has'); }
 function cellTileAdd(p) { const d = cells[p.r * N + p.c], e = tileEl(p.t); e.classList.add('new'); d.appendChild(e); d.classList.add('has'); }
 
-// squares where the next tile can go, given the tiles already placed this turn (null = anywhere)
+// squares where the next tile can go: any empty square in line with the tiles already placed this turn (null = anywhere)
 function candidates() {
   const P = G.placed, out = new Set();
   const filled = (r, c) => G.board[r][c] || P.some(p => p.r === r && p.c === c);
@@ -716,14 +713,8 @@ function candidates() {
     for (let i = 0; i < N; i++) { if (!filled(MID, i)) out.add(MID * N + i); if (!filled(i, MID)) out.add(i * N + MID); }
     return out;
   }
-  const line = (fixed, horiz) => {
-    const pos = P.map(p => horiz ? p.c : p.r), mn = Math.min(...pos), mx = Math.max(...pos);
-    for (let k = 0; k < N; k++) {
-      const r = horiz ? fixed : k, c = horiz ? k : fixed; if (filled(r, c)) continue;
-      let ok = true;
-      for (let m = Math.min(k, mn); m <= Math.max(k, mx); m++) { if (m !== k && !filled(horiz ? fixed : m, horiz ? m : fixed)) { ok = false; break; } }
-      if (ok) out.add(r * N + c);
-    }
+  const line = (fixed, horiz) => {   // every empty square on the row or column, so a long word can be started from far away
+    for (let k = 0; k < N; k++) { const r = horiz ? fixed : k, c = horiz ? k : fixed; if (!filled(r, c)) out.add(r * N + c); }
   };
   if (P.every(p => p.r === P[0].r)) line(P[0].r, true);
   if (P.every(p => p.c === P[0].c)) line(P[0].c, false);

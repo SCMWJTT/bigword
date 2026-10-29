@@ -37,7 +37,7 @@
     row('Most tier 3-4 tiles in a rack (8 = no limit)', 'dMax') + '</table>' +
     '<h4>Game</h4><table>' + row('Bingo bonus', 'dBingo') + '</table>' +
     '<label class="ck"><input type="checkbox" id="dCR"> Ask before cancelling a game</label>' +
-    '<label class="ck"><input type="checkbox" id="dSB"> First racks: no S and one blank (both players)</label>' +
+    '<label class="ck"><input type="checkbox" id="dSB"> Test only: the player who goes first gets one blank and no S in their first rack</label>' +
     '<button id="dTest">Test draws (1,000 racks)</button><div id="dOut"></div>' +
     '<button id="dSave">Save (counts apply to new games)</button><button id="dReset">Reset to config.js</button>' +
     '<button id="dCopy">Show text for config.js</button><textarea id="dText" rows="9" style="display:none;width:100%;font-size:12px"></textarea>' +
