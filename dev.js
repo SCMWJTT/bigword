@@ -38,6 +38,10 @@
     '<h4>Game</h4><table>' + row('Bingo bonus', 'dBingo') + '</table>' +
     '<label class="ck"><input type="checkbox" id="dCR"> Ask before cancelling a game</label>' +
     '<label class="ck"><input type="checkbox" id="dSB"> Test only: the player who goes first gets one blank and no S in their first rack</label>' +
+    '<h4>Simulation</h4><label>Player level<select id="dsA"><option value="hard">Hard</option><option value="medium">Medium</option><option value="easy">Easy</option></select></label>' +
+    '<label>Computer level<select id="dsB"><option value="hard">Hard</option><option value="medium">Medium</option><option value="easy">Easy</option></select></label>' +
+    '<label>Speed<select id="dsS"><option value="normal">About 2 seconds per play (roughly a minute for the whole bag)</option><option value="fast">Fast (as quick as the phone can go)</option></select></label>' +
+    '<button id="dSim">Start simulation</button><small>The player side uses your Help my luck settings. Pause or stop from the Menu. Your real game comes back when you stop.</small>' +
     '<button id="dTest">Test draws (1,000 racks)</button><div id="dOut"></div>' +
     '<button id="dSave">Save (counts apply to new games)</button><button id="dReset">Reset to config.js</button>' +
     '<button id="dCopy">Show text for config.js</button><textarea id="dText" rows="9" style="display:none;width:100%;font-size:12px"></textarea>' +
@@ -126,6 +130,7 @@
     const ta = $('dText'); ta.style.display = 'block'; ta.value = t; ta.select();
     try { navigator.clipboard.writeText(t); } catch (e) {}
   };
+  $('dSim').onclick = () => { ov.classList.remove('on'); window.BW.startSim({ a: $('dsA').value, b: $('dsB').value, speed: $('dsS').value }); };
   $('dClose').onclick = () => ov.classList.remove('on');
   mb.onclick = () => { $('menu').classList.remove('on'); fill(); ov.classList.add('on'); };
 })();
