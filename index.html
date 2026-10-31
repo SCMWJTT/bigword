@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bigword">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#252D38">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -19,23 +23,23 @@ body{--tfont:'BWTile','Montserrat','Segoe UI',system-ui,sans-serif;
 .th-forest{--bg:#16261c;--pn:#24402e;--tx:#e4f0e6;--mu:#9fb8a5;--bd:#365a43;--ac:#c9e265;--ac2:#a3d977;--tray:#0f1d14}
 .th-berry{--bg:#2a1626;--pn:#46233f;--tx:#f5e6f1;--mu:#c9a4be;--bd:#6a3a60;--ac:#ff8fc1;--ac2:#ffb3d6;--tray:#1e0f1b}
 .th-light{--bg:#FAF9F6;--pn:#ffffff;--tx:#20232A;--mu:#737985;--bd:#E6E0D7;--ac:#F6B93F;--ac2:#3478DF;--cell:#F8F0DF;--ln:#d8cbb0;--frame:#EFE1CD;--tray:#E3C99C;--b-tw:#E54C51;--b-dw:#F17E9C;--b-tl:#2675D9;--b-dl:#82BDEA}
-.ts-classic,.ts-skin{--tf1:#FBE2B0;--tf2:#F2CB88;--th:#FFEBC5;--te:#CA935A;--tk:#292015;--rx:10px}
-.ts-honey{--tf1:#F5D09C;--tf2:#E6B374;--th:#FFE2AC;--te:#A96A39;--tk:#24170F;--rx:10px}
-.ts-white{--tf1:#ffffff;--tf2:#ececec;--th:#ffffff;--te:#a8a8a8;--tk:#222;--rx:10px}
-.ts-dark{--tf1:#2f3745;--tf2:#1b212b;--th:#7285a3;--te:#0b0e13;--tk:#ffffff;--rx:10px}
+.ts-classic,.ts-skin{--tf1:#FBE2B0;--tf2:#F2CB88;--th:#FFEBC5;--te:#CA935A;--tk:#292015;--rx:8px}
+.ts-honey{--tf1:#F5D09C;--tf2:#E6B374;--th:#FFE2AC;--te:#A96A39;--tk:#24170F;--rx:8px}
+.ts-white{--tf1:#ffffff;--tf2:#ececec;--th:#ffffff;--te:#a8a8a8;--tk:#222;--rx:8px}
+.ts-dark{--tf1:#2f3745;--tf2:#1b212b;--th:#7285a3;--te:#0b0e13;--tk:#ffffff;--rx:8px}
 .ts-clean{--tf1:#fbfbfd;--tf2:#f0f0f5;--th:#ffffff;--te:#c9c9d3;--tk:#333;--rx:16px}
 .fin-wood{--grain:.38}
-#app{width:min(100vw,560px);height:100%;display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 8px;overflow:hidden}
-#top{width:100%;display:flex;align-items:center;gap:10px;background:var(--pn);border:1px solid var(--bd);border-radius:14px;padding:5px 10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-#logo{width:30px;flex:none}
-#title{font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:20px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sc{text-align:center;line-height:1.05;font-size:11px;color:var(--mu)}
-.sc b{display:block;font-size:20px;color:var(--ac)}
+#app{width:min(100vw,560px);height:100%;display:flex;flex-direction:column;align-items:center;gap:5px;padding:3px 3px;overflow:hidden}
+#top{width:100%;display:flex;align-items:center;gap:8px;background:var(--pn);border:1px solid var(--bd);border-radius:10px;padding:3px 8px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+#logo{width:24px;flex:none}
+#title{font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:17px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc{text-align:center;line-height:1.05;font-size:10px;color:var(--mu)}
+.sc b{display:block;font-size:17px;color:var(--ac)}
 .th-light .sc b{color:var(--tx)}
-#bagi{display:flex;align-items:center;gap:4px;font-size:15px;font-weight:700}
-#bagi svg{width:22px;height:22px}
-#bw{width:min(100%,calc(100dvh - 400px));min-width:250px;padding:9px;border-radius:14px;background:var(--frame);box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 -3px 0 rgba(0,0,0,.2),0 6px 14px rgba(0,0,0,.28);flex:none}
-body.noscr #bw{width:min(100%,calc(100dvh - 300px))}
+#bagi{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:700}
+#bagi svg{width:20px;height:20px}
+#bw{width:min(100%,calc(100dvh - 360px));min-width:250px;padding:5px;border-radius:8px;background:var(--frame);box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 -3px 0 rgba(0,0,0,.2),0 6px 14px rgba(0,0,0,.28);flex:none}
+body.noscr #bw{width:min(100%,calc(100dvh - 250px))}
 #vp{width:100%;aspect-ratio:1;overflow:hidden;position:relative;touch-action:none;background:#222;border-radius:3px}
 #board,.mbd{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;--z:1;
  --bg-plain:var(--cell);--fg-plain:#fff;--bg-tw:var(--b-tw);--fg-tw:#fff;--bg-dw:var(--b-dw);--fg-dw:#fff;--bg-tl:var(--b-tl);--fg-tl:#fff;--bg-dl:var(--b-dl);--fg-dl:#fff;--bg-st:var(--b-dw);--fg-st:#fff;--line:var(--ln)}
@@ -74,39 +78,41 @@ body.noscr #bw{width:min(100%,calc(100dvh - 300px))}
 .pv.x{color:#ffb4b4}
 .cell.tgt .pv{display:none}
 #bar{width:100%;display:flex;align-items:center;gap:6px;flex:none}
-#status{flex:1;min-height:38px;font-size:13px;line-height:1.3;padding:2px 4px;display:flex;align-items:center}
-#bDir{min-height:38px;min-width:92px;font-size:12.5px;padding:4px 8px}
-#tray{width:100%;background:var(--tray);border-radius:14px;padding:6px;box-shadow:inset 0 2px 6px rgba(0,0,0,.4),0 0 0 1px var(--bd);flex:none}
+#status{flex:1;min-width:0;min-height:20px;font-size:12.5px;line-height:1.3;padding:0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bDir{min-height:30px;min-width:74px;font-size:12px;padding:2px 8px;border-radius:8px;flex:none}
+#tray{width:100%;background:var(--tray);border-radius:6px;padding:5px;box-shadow:inset 0 2px 6px rgba(0,0,0,.4),0 0 0 1px var(--bd);flex:none}
 .th-light #tray{background:linear-gradient(#ead3a8,#d3b480);box-shadow:inset 0 2px 5px rgba(120,80,30,.35),0 0 0 1px #c9a870}
 #tray.hot{outline:3px solid var(--ac2)}
 #rack{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;touch-action:none}
-.slot{aspect-ratio:1;border-radius:10px;background:rgba(0,0,0,.2)}
+.slot{aspect-ratio:1;border-radius:5px;background:rgba(0,0,0,.2)}
 .th-light .slot{background:rgba(110,70,20,.14)}
 .slot.ts{outline:3px solid var(--ac2);outline-offset:-1px}
-#scr{width:100%;background:var(--pn);border:1px solid var(--bd);border-radius:14px;padding:6px 8px 6px;box-shadow:0 2px 8px rgba(0,0,0,.18);flex:none}
-#scr .sh{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+#scr{width:100%;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:4px 6px;box-shadow:0 2px 8px rgba(0,0,0,.18);flex:none}
+#scr .sh{display:flex;align-items:center;gap:6px;margin-bottom:3px}
 #scr .sh b{font-size:13px;flex:1}
-#scr .sh button,#scGrip{min-height:32px;padding:3px 10px;font-size:12px}
+#scr .sh button,#scGrip{min-height:30px;padding:2px 10px;font-size:12px}
+#scGrip:not(:disabled){background:var(--ac);color:#2a1d05;font-weight:700;border-color:transparent;box-shadow:0 0 0 2px var(--ac2)}
+#scGrip:disabled{opacity:.4}
 #scrow{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;touch-action:none}
-.sslot{aspect-ratio:1;border-radius:8px;border:1.5px dashed rgba(128,128,128,.5)}
+.sslot{aspect-ratio:1;border-radius:5px;border:1.5px dashed rgba(128,128,128,.5)}
 .sslot.f{border-color:transparent}
 .sslot.ts{outline:3px solid var(--ac2);outline-offset:-1px}
-#sfb{display:flex;align-items:center;gap:8px;margin-top:5px;font-size:12.5px;min-height:34px}
+#sfb{display:flex;align-items:center;gap:8px;margin-top:3px;font-size:12px;min-height:18px}
 #sfb .t{flex:1;line-height:1.25}
 .ok{color:#2e9d5b}.no{color:#e0524f}.warn{color:#d98a1c}.mu{color:var(--mu)}
 .th-light .ok{color:#1f8a4c}
-.row{display:flex;gap:6px;width:100%;justify-content:center;flex:none}
+.row{display:flex;gap:5px;width:100%;justify-content:center;flex:none}
 .row button{flex:1;min-width:0}
-button{background:var(--pn);color:var(--tx);border:1px solid var(--bd);min-height:46px;padding:6px 4px;border-radius:10px;font-size:13px;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+button{background:var(--pn);color:var(--tx);border:1px solid var(--bd);min-height:44px;padding:4px 4px;border-radius:8px;font-size:13px;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 1px 3px rgba(0,0,0,.18)}
 button:active{filter:brightness(1.2)}
 button:disabled{opacity:.4}
 button svg{width:18px;height:18px;flex:none}
-.row.r2 button{flex-direction:column;gap:2px;font-size:11px;min-height:48px}
+.row.r2 button{flex-direction:column;gap:2px;font-size:11px;min-height:44px}
 #bPlay{flex:1.6;background:var(--ac);color:#2a1d05;font-weight:700;border-color:transparent;font-size:15px}
 .ghost{position:fixed;left:0;top:0;pointer-events:none;z-index:20;opacity:.96;will-change:transform}
 .ghost .tile,.tile.ghost{filter:drop-shadow(0 7px 5px rgba(0,0,0,.45))}
 #scGrip{touch-action:none}
-.wg{display:flex;gap:2px}.wg.dn{flex-direction:column}
+.wg{display:flex;gap:0}.wg.dn{flex-direction:column}
 #mag{position:fixed;z-index:30;width:128px;height:128px;border-radius:50%;overflow:hidden;border:3px solid var(--ac);box-shadow:0 4px 12px rgba(0,0,0,.5);display:none;pointer-events:none;background:#222}
 #magIn{position:absolute;left:0;top:0;transform-origin:0 0}
 #magX{position:absolute;left:44px;top:44px;width:40px;height:40px;border:2px solid #fff;box-shadow:0 0 0 1px #000;border-radius:4px}
@@ -145,12 +151,12 @@ button svg{width:18px;height:18px;flex:none}
 <div id="app">
 <div id="top"><div id="logo"></div><div id="title">Bigword</div>
   <div class="sc"><span>You</span><b id="s0">0</b></div><div class="sc"><span>Computer</span><b id="s1">0</b></div>
-  <div id="bagi"><span id="bagic"></span><span id="bagn">0</span></div></div>
+  <div id="bagi"><span id="bagic"></span><span id="bagn">0</span></div><button id="bDir"></button></div>
 <div id="bw"><div id="vp"><div id="board"></div></div></div>
-<div id="bar"><div id="status" role="status" aria-live="polite"></div><button id="bDir"></button></div>
+<div id="bar"><div id="status" role="status" aria-live="polite"></div></div>
 <div id="tray"><div id="rack"></div></div>
 <div id="scr">
-  <div class="sh"><b>Scratch row</b><button id="scPaste">Paste</button><button id="scClr">Clear</button><button id="scGrip">Drag word to board</button></div>
+  <div class="sh"><b>Scratch row</b><button id="scPaste">Paste</button><button id="scClr">Clear</button><button id="scGrip">⠿ Drag to board</button></div>
   <div id="scrow"></div>
   <div id="sfb"></div>
 </div>
@@ -170,7 +176,7 @@ button svg{width:18px;height:18px;flex:none}
 <div class="ov" id="menu"><div class="box">
   <button id="mSimP" style="display:none">Pause simulation</button><button id="mSimS" style="display:none">Stop simulation</button>
   <button id="mSet">Settings</button><button id="mStats">Scores and history</button>
-  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 8</small>
+  <button id="mNew">Cancel game and restart</button><button id="mClose">Close</button><small>Bigword build 9</small>
 </div></div>
 
 <div class="ov" id="stats"><div class="box"><b>Scores and history</b><div id="statBody"></div>
@@ -191,7 +197,14 @@ button svg{width:18px;height:18px;flex:none}
   <label class="ck"><input type="checkbox" id="sBest"> Also show the best score the word could make on the board</label>
   <h4>Look and feel</h4>
   <label>Board skin<select id="sSkin"></select></label>
-  <label>Zoom after the first tile is dropped<select id="sDz"><option value="off">Off</option><option value="low">Low</option><option value="med">Medium</option><option value="high">High</option></select></label>
+  <h4>Zoom and magnifier</h4>
+  <label><span>Hover zoom level: <b id="vHz"></b></span><input type="range" id="sHz" min="0" max="160" step="5"></label>
+  <label><span>Hover zoom delay: <b id="vHd"></b></span><input type="range" id="sHd" min="0" max="40" step="1"></label>
+  <label><span>First-tile zoom level: <b id="vFz"></b></span><input type="range" id="sFz" min="0" max="160" step="5"></label>
+  <label><span>First-tile zoom delay: <b id="vFd"></b></span><input type="range" id="sFd" min="0" max="20" step="1"></label>
+  <label>Magnifier shape<select id="sMag"><option value="circle">Circle</option><option value="square">Square</option><option value="off">Off</option></select></label>
+  <label><span>Magnifier size: <b id="vMsz"></b></span><input type="range" id="sMsz" min="80" max="200" step="10"></label>
+  <label><span>Magnifier strength: <b id="vMst"></b></span><input type="range" id="sMst" min="80" max="250" step="10"></label>
   <label>Letter size<input type="range" id="sLsz" min="80" max="150" step="5"></label>
   <label>Points size<input type="range" id="sPsz" min="70" max="170" step="10"></label>
   <label class="ck"><input type="checkbox" id="sHap"> Vibration feedback</label>
@@ -217,7 +230,7 @@ const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', VOW = 'AEIOU', DZ = { off: 0, low: .8,
 const $ = id => document.getElementById(id);
 const vp = $('vp'), board = $('board');
 let S = { theme: 'slate', tiles: 'classic', fin: 'smooth', noRare: true, hBal: true, hDup: true, hHard: true, showBag: true,
-          level: 'hard', first: 'random', lastFirst: 'computer', dz: 'med', skin: 'classic', lsz: 100, psz: 100, haptic: true, lite: false,
+          level: 'hard', first: 'random', lastFirst: 'computer', hz: 85, hd: 20, fz: 100, fd: 3, mag: 'circle', msz: 128, mst: 100, skin: 'classic', lsz: 100, psz: 100, haptic: true, lite: false,
           scratch: true, sBest: false, dir: 'across' };
 let G = null, selected = -1, busy = true, cur = null, msg = '', HL = null, SIM = null;
 let view = { s: 1, x: 0, y: 0 }, fit = 1;
@@ -238,7 +251,7 @@ const ICONS = {
   menu: ico('<path d="M4 7h16M4 12h16M4 17h16"/>')
 };
 
-const status = m => { $('status').textContent = m; };
+const status = m => { const e = $('status'); e.textContent = m; e.title = m; };
 const shuf = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const save = () => {
   if (SIM || !G) return;
@@ -540,11 +553,16 @@ function clearHL() {
 
 // ---------- placing tiles ----------
 let pending = null;
-function focusOn(r, c) {   // after the first tile (or word) is dropped: one gentle zoom, centred. Near an edge the edge area stays in view.
-  const z = DZ[S.dz]; if (!z) return;
-  const sz = vp.clientWidth, sx = view.x + (c + .5) * CELL * view.s, sy = view.y + (r + .5) * CELL * view.s;
-  if (view.s < z * .98) zoomTo(r, c, z);
-  else if (sx < sz * .2 || sx > sz * .8 || sy < sz * .2 || sy > sz * .8) zoomTo(r, c, view.s);
+let fzT = 0;
+function focusOn(r, c) {   // after the first tile (or word) is dropped: one gentle zoom after a short delay, centred; near an edge the edge area stays in view
+  clearTimeout(fzT);
+  const lvl = S.fz / 100; if (!lvl) return;
+  const go = () => {
+    const sz = vp.clientWidth, sx = view.x + (c + .5) * CELL * view.s, sy = view.y + (r + .5) * CELL * view.s;
+    if (view.s < lvl * .98) zoomTo(r, c, lvl);
+    else if (sx < sz * .2 || sx > sz * .8 || sy < sz * .2 || sy > sz * .8) zoomTo(r, c, view.s);
+  };
+  if (S.fd > 0) fzT = setTimeout(go, S.fd * 100); else go();
 }
 function place(slot, r, c) {
   if (busy || G.over) return;
@@ -555,7 +573,7 @@ function place(slot, r, c) {
 }
 function doPlace(slot, r, c, as) {
   const t = G.rack[slot]; if (as) t.as = as;
-  clearHL(); clearCand();
+  clearHL(); clearCand(); G.grp = false;
   G.placed.push({ r, c, t, slot }); G.rack[slot] = null; selected = -1;
   cellTileAdd(G.placed[G.placed.length - 1]); buzz(12);
   if (G.placed.length === 1) focusOn(r, c);
@@ -577,7 +595,12 @@ function backToRack(p) {
   if (p.t.ch === '?') delete p.t.as;
   G.rack[G.rack[p.slot] === null ? p.slot : G.rack.indexOf(null)] = p.t;
 }
-function recallAll() { G.placed.splice(0).forEach(backToRack); selected = -1; refresh(); }
+function recallAll() {   // a word placed from the scratch row goes back to the scratch row
+  const keep = G.grp && G.placed.length && S.scratch ? G.placed.map(p => ({ t: p.t, as: p.t.as })) : null;
+  G.placed.splice(0).forEach(backToRack); G.grp = false; selected = -1;
+  if (keep) G.sc = keep.map(k => { if (k.as) k.t.as = k.as; return k.t; }).concat(G.sc).slice(0, SMAX);
+  refresh();
+}
 function shuffle() {
   if (busy) return;
   const ts = shuf(G.rack.filter(Boolean)); while (ts.length < C.rackSize) ts.push(null);
@@ -662,9 +685,14 @@ function placeWord(r, c) {   // the scratch row dropped on the board: tiles leav
   tiles.forEach((t, i) => {
     const p = { r: cs[i].r, c: cs[i].c, t, slot: G.rack.indexOf(t) }; G.placed.push(p); G.rack[p.slot] = null; cellTileAdd(p);
   });
-  G.sc = []; selected = -1; buzz(14);
+  G.sc = []; G.grp = true; selected = -1; buzz(14);
   const mid = cs[cs.length >> 1]; focusOn(mid.r, mid.c);
   scUpdate(); light(true); return true;
+}
+function scDouble(t) {   // double-tap a scratch tile: on to the board if a word is under way there, otherwise back to the rack
+  if (!t) return;
+  if (t.um || !G.placed.length) { scRemove(t); return; }
+  const slot = G.rack.indexOf(t); G.sc.splice(G.sc.indexOf(t), 1); scUpdate(); quickPlace(slot);
 }
 $('scClr').onclick = scClear;
 $('scPaste').onclick = scPaste;
@@ -682,7 +710,7 @@ function commitMove(who, cs, r) {
   G.scores[who] += r.total; G.last = cs.map(t => [t.r, t.c]); G.passes = 0;
   if (cs.length === C.rackSize) G.st.bingos[who]++;
   if (r.total > G.st.best[who][1]) G.st.best[who] = [r.words[0].w, r.total];
-  if (who === 0) { G.placed = []; refillHuman(); }
+  if (who === 0) { G.placed = []; G.grp = false; refillHuman(); }
   else {
     cs.forEach(t => { G.crack.splice(G.crack.findIndex(x => x.ch === (t.bl ? '?' : t.ch)), 1); });
     while (G.crack.length < C.rackSize && G.bag.length) G.crack.push({ ch: G.bag.pop() });
@@ -913,7 +941,7 @@ vp.addEventListener('pointerdown', e => {
   if (ptrs.size === 0 && !busy && !G.over && !drag) {
     const q = cellAt(e.clientX, e.clientY), pi = q ? G.placed.findIndex(p => p.r === q.r && p.c === q.c) : -1;
     if (pi >= 0) {   // a tile placed this turn: drag it instead of panning
-      drag = { src: 'board', pi, id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false }; return;
+      drag = { src: G.grp ? 'wboard' : 'board', pi, id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false }; return;
     }
   }
   vp.setPointerCapture(e.pointerId);
@@ -1080,8 +1108,8 @@ function updTgt() {   // only does real work when the target changes
   if (key === d.tgKey) return;
   clearTgt(); d.tgKey = key; d.tg = null; d.wcs = null;
   if (!q) return;
-  if (d.src === 'word') {
-    const cs = scCells(d.tiles, q.r, q.c, S.dir);
+  if (d.src === 'word' || d.src === 'wboard') {
+    const cs = scCells(d.tiles, q.r, q.c, d.dir);
     if (!cs) { status("The word doesn't fit there."); return; }
     d.tg = { cell: q }; d.wcs = cs; buzz(6);
     cs.forEach((c2, i) => {
@@ -1098,53 +1126,86 @@ function updTgt() {   // only does real work when the target changes
   hoverShow(hoverEval(q, d.t), el);
 }
 
-// magnifier bubble: shows the squares around the target while the whole board is small (no zooming while you drag)
+// magnifier bubble: shows the squares around the target (shape, size and strength are settings)
 function magStart(d) {
-  d.mag = false; if (S.lite || view.s >= .85) return;
-  d.mag = true; const inn = $('magIn'); inn.innerHTML = '';
+  d.mag = false; if (S.lite || S.mag === 'off') return;
+  d.mag = true; const m = $('mag'), sz = S.msz, ms = S.mst / 100, bx = CELL * ms; d.ms = ms;
+  m.style.width = m.style.height = sz + 'px'; m.style.borderRadius = S.mag === 'circle' ? '50%' : '10px';
+  const inn = $('magIn'); inn.innerHTML = '';
   const cl = board.cloneNode(true); cl.removeAttribute('id'); cl.className = 'mbd'; cl.style.transform = ''; cl.style.willChange = ''; cl.style.transition = 'none';
   inn.appendChild(cl); d.magCl = cl;
-  const x = $('magX'); x.innerHTML = ''; x.appendChild(tileEl(d.src === 'word' ? d.tiles[0] : d.t));
+  const x = $('magX'); x.style.width = x.style.height = bx + 'px'; x.style.left = x.style.top = (sz / 2 - bx / 2) + 'px';
+  x.innerHTML = ''; x.appendChild(tileEl(d.tiles ? d.tiles[0] : d.t));
 }
 function magUpdate(d) {
-  if (!d.mag) return; const m = $('mag'), vr = d.vr;
-  if (zone(d) !== 'board' || !inR(d.x, d.y - OFF, vr, 20)) { m.style.display = 'none'; return; }
+  if (!d.mag) return; const m = $('mag'), vr = d.vr, sz = S.msz, half = sz / 2;
+  if (zone(d) !== 'board' || !inR(d.x, d.y - OFF, vr, 20) || view.s * 1.2 >= d.ms) { m.style.display = 'none'; return; }   // only while the board is small
   m.style.display = 'block';
-  m.style.left = (d.x < vr.left + vr.width / 2 ? vr.right - 136 : vr.left + 8) + 'px';
-  m.style.top = (d.y - OFF < vr.top + vr.height / 2 ? vr.bottom - 136 : vr.top + 8) + 'px';
+  m.style.left = (d.x < vr.left + vr.width / 2 ? vr.right - sz - 8 : vr.left + 8) + 'px';
+  m.style.top = (d.y - OFF < vr.top + vr.height / 2 ? vr.bottom - sz - 8 : vr.top + 8) + 'px';
   const tc = d.tg && d.tg.cell, fx = tc ? tc.c + .5 : (d.x - vr.left - view.x) / view.s / CELL, fy = tc ? tc.r + .5 : (d.y - OFF - vr.top - view.y) / view.s / CELL;
-  d.magCl.style.transform = 'translate(' + (64 - fx * CELL) + 'px,' + (64 - fy * CELL) + 'px)';
+  d.magCl.style.transform = 'translate(' + (half - fx * CELL * d.ms) + 'px,' + (half - fy * CELL * d.ms) + 'px) scale(' + d.ms + ')';
 }
 function magEnd() { $('mag').style.display = 'none'; $('magIn').innerHTML = ''; }
 
+function sizeGhost(d) {   // a word ghost is exactly one board square per tile so it lines up with the grid
+  d.gw = CELL * view.s;
+  d.ghost.querySelectorAll('.tile').forEach(e => { e.style.width = d.gw + 'px'; });
+  d.ghost.style.transformOrigin = d.gw / 2 + 'px ' + d.gw / 2 + 'px';
+}
 function startDrag(d) {
-  d.moved = true; clearHL(); let el;
+  d.moved = true; clearHL(); clearTimeout(fzT); let el;
+  const grouped = d.src === 'word' || d.src === 'wboard';
   if (d.src === 'rack') { d.t = G.rack[d.i]; el = d.el; el.classList.add('lifted'); selected = -1; }
   else if (d.src === 'scratch') { d.t = G.sc[d.i]; el = d.el; el.classList.add('lifted'); }
   else if (d.src === 'board') {
     const p = G.placed.splice(d.pi, 1)[0]; d.t = p.t; d.slot = p.slot; d.origin = { r: p.r, c: p.c };
     el = cells[p.r * N + p.c].querySelector('.tile');
-  } else d.tiles = G.sc.slice();
-  const gw = Math.max(30, CELL * view.s * 1.2); d.gw = gw; let g;
-  if (d.src === 'word') {
-    g = document.createElement('div'); g.className = 'wg' + (S.dir === 'down' ? ' dn' : '');
-    d.tiles.forEach(t => { const e = tileEl(t); e.style.width = gw + 'px'; g.appendChild(e); });
-  } else { g = el.cloneNode(true); g.classList.remove('sel', 'lifted', 'new', 'prev', 'faded'); g.style.width = gw + 'px'; }
-  g.classList.add('ghost'); g.style.transformOrigin = gw / 2 + 'px ' + gw / 2 + 'px'; document.body.appendChild(g); d.ghost = g;
+  } else if (d.src === 'word') { d.tiles = G.sc.slice(); d.dir = S.dir; }
+  else {   // a word already on the board moves as one object
+    const it = G.placed.splice(0); d.dir = it.every(p => p.r === it[0].r) ? 'across' : 'down';
+    it.sort((a, b) => d.dir === 'across' ? a.c - b.c : a.r - b.r);
+    d.items = it; d.tiles = it.map(p => p.t); d.origin = { r: it[0].r, c: it[0].c };
+  }
+  let g;
+  if (grouped) {
+    g = document.createElement('div'); g.className = 'wg' + (d.dir === 'down' ? ' dn' : '');
+    d.tiles.forEach(t => g.appendChild(tileEl(t)));
+  } else { g = el.cloneNode(true); g.classList.remove('sel', 'lifted', 'new', 'prev', 'faded'); g.style.width = Math.max(30, CELL * view.s * 1.2) + 'px'; }
+  g.classList.add('ghost'); document.body.appendChild(g); d.ghost = g;
+  if (grouped) sizeGhost(d); else { d.gw = parseFloat(g.style.width); g.style.transformOrigin = d.gw / 2 + 'px ' + d.gw / 2 + 'px'; }
   d.vr = vp.getBoundingClientRect(); d.rr = $('rack').getBoundingClientRect(); d.sr = $('scr').getBoundingClientRect();   // measured once per drag
   const cen = list => [...list].map(s => { const r = s.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
   d.sl = cen(document.querySelectorAll('#rack .slot')); d.ss = cen(document.querySelectorAll('#scrow .sslot'));
-  d.t0 = performance.now(); d.tgKey = -1; d.lastJ = d.lastS = null; d.dirty = true;
+  d.t0 = performance.now(); d.tgKey = -1; d.lastJ = d.lastS = null; d.dirty = true; d.hx = d.x; d.hy = d.y; d.hs = d.t0; d.zoomed = false;
   try { document.body.setPointerCapture(d.id); } catch (e) {}
   if (d.src === 'board') { cellTileRemove(d.origin.r, d.origin.c); evaluate(); }
-  d.cset = d.src === 'word' ? null : showCand(d.t);
+  if (d.src === 'wboard') { d.items.forEach(p => cellTileRemove(p.r, p.c)); evaluate(); }
+  d.cset = grouped ? null : showCand(d.t);
   magStart(d); buzz(10); raf = requestAnimationFrame(loop);
 }
-function loop(t) {   // one update per screen frame: move the tile (no board zoom or pan while dragging)
+function loop(t) {   // one update per screen frame
   const d = drag; if (!d || !d.moved) return;
+  const dt = Math.min(50, t - (d.tl || t)); d.tl = t;
   const lite = REDUCE || S.lite, k = Math.min(1, (t - d.t0) / 90), e = 1 - (1 - k) * (1 - k);
   d.ghost.style.transform = 'translate3d(' + (d.x - d.gw / 2) + 'px,' + (d.y - (lite ? OFF : OFF * e) - d.gw / 2) + 'px,0) scale(' + (lite ? 1 : 1 + .12 * e) + ')';
-  if (d.dirty) { d.dirty = false; updTgt(); magUpdate(d); }
+  const vr = d.vr, onB = zone(d) === 'board' && inR(d.x, d.y - OFF, vr, 0), hz = S.hz / 100;
+  let moved = false;
+  if (onB && hz && !d.zoomed) {   // hold the tile still over the board and it zooms in a little, anchored under the tile
+    if (Math.hypot(d.x - d.hx, d.y - d.hy) > 14) { d.hx = d.x; d.hy = d.y; d.hs = t; }
+    else if (t - d.hs > S.hd * 100 && view.s < hz * .98) {
+      animate(); zoomAt(d.x - vr.left, d.y - OFF - vr.top, hz / view.s); d.zoomed = true; moved = true;
+      if (d.src === 'word' || d.src === 'wboard') sizeGhost(d);
+    }
+  } else if (!onB) { d.hx = d.x; d.hy = d.y; d.hs = t; }
+  if (d.zoomed && onB) {   // once zoomed, the board eases so the area under the tile drifts toward the middle
+    const sz = vr.width, cx = sz / 2, dz = sz * .22, px = d.x - vr.left, py = d.y - OFF - vr.top;
+    let ex = 0, ey = 0;
+    if (px < cx - dz) ex = cx - dz - px; else if (px > cx + dz) ex = cx + dz - px;
+    if (py < cx - dz) ey = cx - dz - py; else if (py > cx + dz) ey = cx + dz - py;
+    if (ex || ey) { const f = Math.min(1, 1.6 * dt / 1000); view.x += ex * f; view.y += ey * f; apply(); moved = true; }
+  }
+  if (d.dirty || moved) { d.dirty = false; updTgt(); magUpdate(d); }
   raf = requestAnimationFrame(loop);
 }
 function flyTo(d, x, y, sc) {   // glide the floating tile to where it lands, or back home
@@ -1184,10 +1245,12 @@ function endDrag(e, cancelled) {
       const now = Date.now(), dbl = lastTap.i === d.i && now - lastTap.t < 320; lastTap = { i: d.i, t: now };
       if (dbl) { selected = -1; drawRack(G.rack, -1, -1); lastTap.t = 0; quickPlace(d.i); }
       else { selected = selected === d.i ? -1 : d.i; drawRack(G.rack, -1, -1); if (selected >= 0) showCand(G.rack[selected]); }
-    } else if (d.src === 'scratch') scRemove(G.sc[d.i]);
-    else if (d.src === 'board') { backToRack(G.placed.splice(d.pi, 1)[0]); refresh(); }
-    else status('Drag this onto the board to place the whole scratch row.');
-    return;
+    } else if (d.src === 'scratch') {
+      const now = Date.now(), key = 's' + d.i, dbl = lastTap.i === key && now - lastTap.t < 320; lastTap = { i: key, t: now };
+      if (dbl) { lastTap.t = 0; scDouble(G.sc[d.i]); } else status('Double-tap a scratch tile to send it on, or drag it.');
+    } else if (d.src === 'board') { backToRack(G.placed.splice(d.pi, 1)[0]); refresh(); }
+    else status('Drag to move the whole word, or press Recall.');
+    scFeedback(); return;
   }
   drawRack(G.rack, -1, -1); drawScratch(G.sc, -1, -1);
   let fx = d.x, fy = d.y - OFF, fs = 1;
@@ -1197,11 +1260,16 @@ function endDrag(e, cancelled) {
     if (d.src === 'rack') { const s = d.sl[d.i]; fx = s.x; fy = s.y; status('Missed. The tile went back where it was.'); }
     else if (d.src === 'scratch') { const s = d.ss[d.i]; fx = s.x; fy = s.y; }
     else if (d.src === 'word') { const g = $('scGrip').getBoundingClientRect(); fx = g.left + g.width / 2; fy = g.top + g.height / 2; fs = .5; }
+    else if (d.src === 'wboard') { d.items.forEach(p => { G.placed.push(p); cellTileAdd(p); }); [fx, fy] = cellXY(d.origin.r, d.origin.c); light(); }
     else { const p = { r: d.origin.r, c: d.origin.c, t: d.t, slot: d.slot }; G.placed.push(p); cellTileAdd(p); [fx, fy] = cellXY(p.r, p.c); light(); }
   };
   if (!cancelled && tg && tg.cell) {
     const { r, c } = tg.cell; [fx, fy] = cellXY(r, c); fs = landFs();
     if (d.src === 'word') { if (!placeWord(r, c)) home(); }
+    else if (d.src === 'wboard') {   // the word keeps its shape (letters skip tiles already on the board)
+      const cs = scCells(d.tiles, r, c, d.dir);
+      if (!cs) home(); else { d.items.forEach((p, i) => { p.r = cs[i].r; p.c = cs[i].c; G.placed.push(p); cellTileAdd(p); }); buzz(12); light(true); }
+    }
     else if (d.src === 'rack') place(d.i, r, c);
     else if (d.src === 'scratch') {
       if (d.t.um) { status('That letter is not in your rack.'); home(); }
@@ -1219,7 +1287,7 @@ function endDrag(e, cancelled) {
   } else if (!cancelled && tg && tg.back) {   // scratch tile returned to its rack position
     const s = d.sl[Math.max(0, G.rack.indexOf(d.t))]; fx = s.x; fy = s.y; scRemove(d.t); buzz(10);
   } else home();
-  flyTo(d, fx, fy, fs);
+  flyTo(d, fx, fy, fs); scFeedback();
 }
 window.addEventListener('pointerup', e => endDrag(e, false));
 window.addEventListener('pointercancel', e => endDrag(e, true));
@@ -1282,9 +1350,16 @@ $('mSet').onclick = () => {
   $('sLsz').value = S.lsz; $('sPsz').value = S.psz; $('sTheme').value = S.theme; $('sTiles').value = S.tiles; $('sFin').value = S.fin; $('sSkin').value = S.skin;
   $('sRare').checked = S.noRare; $('hBal').checked = S.hBal; $('hDup').checked = S.hDup; $('hHard').checked = S.hHard; $('sBagOn').checked = S.showBag;
   $('sHap').checked = S.haptic; $('sLite').checked = S.lite; $('sScr').checked = S.scratch; $('sBest').checked = S.sBest;
-  $('sLevel').value = S.level; $('sFirst').value = S.first; $('sDz').value = S.dz; $('set').classList.add('on');
+  $('sLevel').value = S.level; $('sFirst').value = S.first; $('sMag').value = S.mag; syncs.forEach(f => f()); $('set').classList.add('on');
 };
 $('sClose').onclick = () => $('set').classList.remove('on');
+const rng = (id, key, vid, fmt) => {   // a slider that shows its value
+  const el = $(id); el.oninput = e => { S[key] = +e.target.value; $(vid).textContent = fmt(S[key]); save(); };
+  return () => { el.value = S[key]; $(vid).textContent = fmt(S[key]); };
+};
+const pct = v => v ? v + '%' : 'Off', secs = v => (v / 10).toFixed(1) + ' s';
+const syncs = [rng('sHz', 'hz', 'vHz', pct), rng('sHd', 'hd', 'vHd', secs), rng('sFz', 'fz', 'vFz', pct), rng('sFd', 'fd', 'vFd', secs),
+               rng('sMsz', 'msz', 'vMsz', v => v + ' px'), rng('sMst', 'mst', 'vMst', v => v + '%')];
 $('sLsz').oninput = e => { S.lsz = +e.target.value; applySettings(); save(); };
 $('sPsz').oninput = e => { S.psz = +e.target.value; applySettings(); save(); };
 $('sTheme').onchange = e => { S.theme = e.target.value; applySettings(); save(); };
@@ -1294,7 +1369,7 @@ $('sSkin').onchange = e => setSkin(e.target.value);
 [['sRare', 'noRare'], ['hBal', 'hBal'], ['hDup', 'hDup'], ['hHard', 'hHard'], ['sBagOn', 'showBag'], ['sHap', 'haptic'], ['sLite', 'lite'], ['sScr', 'scratch'], ['sBest', 'sBest']].forEach(([id, k]) => {
   $(id).onchange = e => { S[k] = e.target.checked; applySettings(); scFeedback(); save(); };
 });
-[['sLevel', 'level'], ['sFirst', 'first'], ['sDz', 'dz']].forEach(([id, k]) => { $(id).onchange = e => { S[k] = e.target.value; save(); }; });
+[['sLevel', 'level'], ['sFirst', 'first'], ['sMag', 'mag']].forEach(([id, k]) => { $(id).onchange = e => { S[k] = e.target.value; save(); }; });
 $('sFile').onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   const t = await f.text(); await idb(s => s.put(t, 'dict'));
